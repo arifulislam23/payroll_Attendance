@@ -1,0 +1,67 @@
+﻿@model KS_Payroll.Areas.Admin.Data.Comapny
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h4>Comapny</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Cid" />
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyDetails" class="control-label"></label>
+                <input asp-for="CompanyDetails" class="form-control" />
+                <span asp-validation-for="CompanyDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedId" class="control-label"></label>
+                <input asp-for="ModifiedId" class="form-control" />
+                <span asp-validation-for="ModifiedId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created_By" class="control-label"></label>
+                <input asp-for="Created_By" class="form-control" />
+                <span asp-validation-for="Created_By" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Updated_By" class="control-label"></label>
+                <input asp-for="Updated_By" class="form-control" />
+                <span asp-validation-for="Updated_By" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created_At" class="control-label"></label>
+                <input asp-for="Created_At" class="form-control" />
+                <span asp-validation-for="Created_At" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Updated_At" class="control-label"></label>
+                <input asp-for="Updated_At" class="form-control" />
+                <span asp-validation-for="Updated_At" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

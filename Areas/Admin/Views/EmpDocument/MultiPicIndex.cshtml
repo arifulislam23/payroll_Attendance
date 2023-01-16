@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+</head>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="dropzone">
+            <form asp-action="Upload" class="dropzone needsclick dz-clickable" id="uploader">
+                <div class="dz-message needsclick">
+                    Drop files here or click to upload.<br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script>
+        //image/*
+        $(function () {
+            Dropzone.options.imageUpload = {
+
+                maxFilesize: 10,
+
+                acceptedFiles: ".jpeg,.jpg,.png,.gif"
+
+            };
+        });
+    </script>
+
+
+}
+

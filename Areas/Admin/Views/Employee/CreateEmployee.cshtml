@@ -1,0 +1,1003 @@
+﻿@model KS_Payroll.Areas.Admin.ViewModels.EmpinfoVM
+
+    @{
+        IEnumerable<Comapny> CompaniesList = ViewData["Companys"] as IEnumerable<Comapny>;
+
+
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+
+    <div class="row">
+        <form role="form" asp-action="Emp_Create" asp-controller="EmpCreate" enctype="multipart/form-data">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab">Official Informaion</a></li>
+                        <li><a href="#tab_2" data-toggle="tab">Personal Information</a></li>
+                        <li><a href="#tab_3" data-toggle="tab">Salary Information</a></li>
+                        <li><a href="#tab_4" data-toggle="tab">Payment Information</a></li>
+                        <li><a href="#tab_5" data-toggle="tab">Documents</a></li>
+
+                        @*<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>*@
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class='box box-primary'>
+                                <div class='box-body'>
+                                    <div role="form">
+                                        <div class='row'>
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label for="EmpCompany">Select Company</label>
+                                                        <select id="EmpCompany" name="EmpCompany" asp-for="EmpCompany" asp-items="@(new SelectList(ViewBag.companies, "Cid","CompanyName"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Company</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label id="iderror" for="EmpIDCard">ID Card No</label>
+                                                        <input type="text" class="form-control" id="EmpIDCard" asp-for="EmpIDCard"
+                                                               placeholder="New Card Number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label id="iderrors" for="EmpSecrateCode">Secrate Code</label>
+                                                        <input type="text" class="form-control" id="empscode" asp-for="EmpSecrateCode"
+                                                               placeholder="Secrate Code">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpName">Employee Name</label>
+                                                        <input type="text" class="form-control" id="EmpName" asp-for="EmpName"
+                                                               placeholder="Company Name">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpType">Employee Type</label>
+                                                        <select class="form-control" aria-label="Default select example" name="EmpType" asp-for="EmpType">
+                                                            <option value="Worker">Worker</option>
+                                                            <option value="Staff">Staff</option>
+                                                            <option value="Security">Security</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpDepartment">Department</label>
+                                                        <select id="deppid" name="EmpDepartment" asp-for="EmpDepartment" asp-items="@(new SelectList(ViewBag.departments, "DepartmentID","DepartmentName"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Department</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div><!-- /.box-body Left-->
+
+                                            </div>
+                                            <!--</div>--><!-- /.row -->
+                                            <!--<div class='row'>-->
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label for="EmpSection">Section</label>
+                                                        <select id="seccid" name="EmpSection" asp-for="EmpSection" asp-items="@(new SelectList(ViewBag.sections, "SectionId","SectionName"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Section</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpFloor">Floor (free)</label>
+                                                        <select id="floorsid" name="EmpFloor" asp-for="EmpFloor" asp-items="@(new SelectList(ViewBag.floors, "FloorId","FloorName"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Floor</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpLine">Line (Free)</label>
+                                                        <select id="linnid" name="EmpLine" asp-for="EmpLine" asp-items="@(new SelectList(ViewBag.lines, "LineId","LineTitle"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Line</option>
+                                                            <option value="NA">Null</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpJoiningDate">Joining Date</label>
+                                                        <input type="date" class="form-control" name="EmpJoiningDate" value="" asp-for="EmpJoiningDate" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpShift">Select Shift (free)</label>
+                                                        <select id="ShiftId" name="EmpShift" asp-items="@(new SelectList(ViewBag.shifts, "ShiftId","ShiftTitle"))" asp-for="EmpShift"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Shift</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpDesignationType">Designation Type</label>
+                                                        <select id="Designtype" name="EmpDesignationType" asp-for="EmpDesignationType" asp-items="@(new SelectList(ViewBag.DesignationTypes, "DesignationTypeId","DesignationTypeName"))"
+                                                                class="form-control">
+                                                            <option selected>null</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div><!-- /.box-body Mid-->
+                                            </div>
+
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label for="EmpDesignationTitle">Designation</label>
+                                                        <select id="desiggid" name="EmpDesignationTitle" asp-for="EmpDesignationTitle" asp-items="@(new SelectList(ViewBag.designations, "DesigID","DesigName"))"
+                                                                class="form-control">
+                                                            <option selected disabled>Select Designation</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpGrade">Emp. Grade</label>
+                                                            <input type="text" class="form-control" id="gradeauto" asp-for="EmpGrade" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpAttenBonus">Atten Bonus</label>
+                                                            <input type="text" class="form-control" id="attenbonus" asp-for="EmpAttenBonus" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpOverTime">Over Time</label>
+                                                            <input type="text" class="form-control" id="overtime" asp-for="EmpOverTime" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpHolidayAlw">Holiday Allow.</label>
+                                                            <input type="text" class="form-control" id="holidayallow" asp-for="EmpHolidayAlw" readonly />
+                                                        </div>
+
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpNightBill">Night bill</label>
+                                                            <input type="text" class="form-control" id="nightbill" asp-for="EmpNightBill" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpLunchBilll">Lunch Bill</label>
+                                                            <input type="text" class="form-control" id="lunchbill" asp-for="EmpLunchBilll" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpTiffinBill">Tiffin Bill</label>
+                                                            <input type="text" class="form-control" id="tiffinbill" asp-for="EmpTiffinBill" readonly />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpIftarBill">iftar bill</label>
+                                                            <input type="text" class="form-control" id="iftarbill" asp-for="EmpIftarBill" readonly />
+                                                        </div>
+
+                                                    </div>
+                                                </div><!-- /.box-body Right-->
+                                            </div>
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.form -->
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+
+                        </div><!-- /.tab-pane Offical Information-->
+
+
+                        <div class="tab-pane" id="tab_2">
+
+                            <div class='box box-warning'>
+                                <div class='box-body'>
+                                    <div role="form">
+                                        <div class='row'>
+
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label for="EmpFName">Father's Name</label>
+                                                        <input type="text" class="form-control" id="Cname" asp-for="EmpFName"
+                                                               placeholder="Father's Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpMName">Mother's Name</label>
+                                                        <input type="text" class="form-control" id="Caddress" asp-for="EmpMName"
+                                                               placeholder="Mother's Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpSpouseName">Spouse's Name</label>
+                                                        <input type="text" class="form-control" id="Caddress" asp-for="EmpSpouseName"
+                                                               placeholder="Spouse's Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpPhone">Contact Number/Mobile</label>
+                                                        <input type="number" class="form-control" id="Cphn" asp-for="EmpPhone"
+                                                               placeholder="Contact Number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpEmgPerson">Emg. Cont. Person</label>
+                                                        <input type="text" class="form-control" id="Cnote" asp-for="EmpEmgPerson"
+                                                               placeholder="More Info">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpEmgphone">Emg. Cont. Number</label>
+                                                        <input type="text" class="form-control" id="Cnote" asp-for="EmpEmgphone"
+                                                               placeholder="More Info">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpDOB">Date of Birth</label>
+                                                        <input type="date" class="form-control" id="DateOfBirth" name="EmpDOB" asp-for="EmpDOB" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpNID">NID Numbeer</label>
+                                                        <input type="text" class="form-control" id="NID" asp-for="EmpNID"
+                                                               placeholder="National ID Card">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpBODCertificate">Birth Certificate No</label>
+                                                        <input type="text" class="form-control" id="BDO" asp-for="EmpBODCertificate" />
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="EmpPassport">Passport No</label>
+                                                        <input type="text" class="form-control" id="PassportNo" asp-for="EmpPassport" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">Gender</label>
+                                                        <select class="form-control" name="EmpGender" asp-for="EmpGender">
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div><!-- /.box-body -->
+
+                                            </div><!-- /.row Left side-->
+
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label for="EmpChildNumber">Number of Childe</label>
+                                                        <input type="number" class="form-control" id="EmpChildNumber" asp-for="EmpChildNumber">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">Marital Status</label>
+                                                        <select class="form-control" name="EmpMarriedStatus" asp-for="EmpMarriedStatus">
+                                                            <option value="Unmarried">Unmarried</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Devorced">Devorced</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpNationality">Nationality</label>
+                                                        <select id="destinationNation" name="EmpNationality" class="form-control" asp-for="EmpNationality">
+                                                            <option value="Bangladesh" selected>Bangladesh</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpReligion">Religion</label>
+                                                        <select class="form-control" name="EmpReligion" asp-for="EmpReligion">
+                                                            <option value="Islam">Islam</option>
+                                                            <option value="Hindu">Hindu</option>
+                                                            <option value="Buddhist">Buddhist</option>
+                                                            <option value="Crishtiano">Crishtiano</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpBlood" class="form-label">Blood Group</label>
+                                                        <select class="form-control" name="EmpBlood" id="BloodGroup" asp-for="EmpBlood">
+                                                            <option value="A+">A+</option>
+                                                            <option value="A-">A-</option>
+                                                            <option selected value="B+">B+</option>
+                                                            <option value="B-">B-</option>
+                                                            <option value="O+">O+</option>
+                                                            <option value="O-">O-</option>
+                                                            <option value="AB+">AB+</option>
+                                                            <option value="AB-">AB-</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpNomineeName">Nominee's Name</label>
+                                                        <input type="text" class="form-control" id="NomineePhone" asp-for="EmpNomineeName" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpNomineePhn">Nominee's Phone</label>
+                                                        <input type="number" class="form-control" id="EmpNomineePhn" asp-for="EmpNomineePhn" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpNomineeRlt">Nominee Relationship</label>
+                                                        <input type="text" class="form-control" id="NomineeRelation" asp-for="EmpNomineeRlt" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpRefName">Ref. By</label>
+                                                        <input type="text" class="form-control" id="EmpRefName" asp-for="EmpRefName"
+                                                               placeholder="Reference By">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpRefNumber">Ref. Number</label>
+                                                        <input type="text" class="form-control" id="EmpRefNumber" asp-for="EmpRefNumber"
+                                                               placeholder="Refer Number ">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpHeight">Height(ft.in)</label>
+                                                            <input type="number" class="form-control" id="Height" asp-for="EmpHeight" />
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="EmpWeight">Weight(KG)</label>
+                                                            <input type="number" class="form-control" id="Weight" asp-for="EmpWeight" />
+                                                        </div>
+                                                    </div>
+
+                                                </div><!-- /.box-body -->
+
+                                            </div><!-- /.row Mid side-->
+
+                                            <div class='row col-md-4'>
+                                                <div class="box-body">
+
+                                                    <h4>Parmanent  Address: </h4>
+                                                    <hr />
+                                                    <div class="row tr">
+                                                        <div class=" col-md-5 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpParmanentDistrict">Parmanent  District</label>
+                                                                <select class="form-control" name="EmpParmanentDistrict" asp-for="EmpParmanentDistrict">
+                                                                    <option value="Bagerhat">Bagerhat</option>
+                                                                    <option value="Bandarban">Bandarban</option>
+                                                                    <option value="Barguna">Barguna</option>
+                                                                    <option value="Barisal">Barisal</option>
+                                                                    <option value="Bhola">Bhola</option>
+                                                                    <option value="Bogra">Bogra</option>
+                                                                    <option value="Brahmanbaria">Brahmanbaria</option>
+                                                                    <option value="Chandpur">Chandpur</option>
+                                                                    <option value="Chittagong">Chittagong</option>
+                                                                    <option value="Chuadanga">Chuadanga</option>
+                                                                    <option value="Comilla">Comilla</option>
+                                                                    <option value="CoxsBazar">Cox'sBazar</option>
+                                                                    <option value="Dhaka">Dhaka</option>
+                                                                    <option value="Dinajpur">Dinajpur</option>
+                                                                    <option value="Faridpur">Faridpur</option>
+                                                                    <option value="Feni">Feni</option>
+                                                                    <option value="Gaibandha">Gaibandha</option>
+                                                                    <option selected value="Gazipur">Gazipur</option>
+                                                                    <option value="Gopalganj">Gopalganj</option>
+                                                                    <option value="Habiganj">Habiganj</option>
+                                                                    <option value="Jaipurhat">Jaipurhat</option>
+                                                                    <option value="Jamalpur">Jamalpur</option>
+                                                                    <option value="Jessore">Jessore</option>
+                                                                    <option value="Jhalokati">Jhalokati</option>
+                                                                    <option value="Jhenaidah">Jhenaidah</option>
+                                                                    <option value="Khagrachari">Khagrachari</option>
+                                                                    <option value="Khulna">Khulna</option>
+                                                                    <option value="Kishoreganj">Kishoreganj</option>
+                                                                    <option value="Kurigram">Kurigram</option>
+                                                                    <option value="Kushtia">Kushtia</option>
+                                                                    <option value="Lakshmipur">Lakshmipur</option>
+                                                                    <option value="Lalmonirhat">Lalmonirhat</option>
+                                                                    <option value="Madaripur">Madaripur</option>
+                                                                    <option value="Magura">Magura</option>
+                                                                    <option value="Manikganj">Manikganj</option>
+                                                                    <option value="Maulvibazar">Maulvibazar</option>
+                                                                    <option value="Meherpur">Meherpur</option>
+                                                                    <option value="Munshiganj">Munshiganj</option>
+                                                                    <option value="Mymensingh">Mymensingh</option>
+                                                                    <option value="Naogaon">Naogaon</option>
+                                                                    <option value="Narail">Narail</option>
+                                                                    <option value="Narayanganj">Narayanganj</option>
+                                                                    <option value="Narsingdi">Narsingdi</option>
+                                                                    <option value="Natore">Natore</option>
+                                                                    <option value="Nawabganj">Nawabganj</option>
+                                                                    <option value="Netrokona">Netrokona</option>
+                                                                    <option value="Nilphamari">Nilphamari</option>
+                                                                    <option value="Noakhali">Noakhali</option>
+                                                                    <option value="Pabna">Pabna</option>
+                                                                    <option value="Panchagarh">Panchagarh</option>
+                                                                    <option value="Patuakhali">Patuakhali</option>
+                                                                    <option value="Pirojpur">Pirojpur</option>
+                                                                    <option value="Rajbari">Rajbari</option>
+                                                                    <option value="Rajshahi">Rajshahi</option>
+                                                                    <option value="Rangamati">Rangamati</option>
+                                                                    <option value="Rangpur">Rangpur</option>
+                                                                    <option value="Satkhira">Satkhira</option>
+                                                                    <option value="Shariatpur">Shariatpur</option>
+                                                                    <option value="Sherpur">Sherpur</option>
+                                                                    <option value="Sirajganj">Sirajganj</option>
+                                                                    <option value="Sunamganj">Sunamganj</option>
+                                                                    <option value="Sylhet">Sylhet</option>
+                                                                    <option value="Tangail">Tangail</option>
+                                                                    <option value="Thakurgaon">Thakurgaon</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpParmanentZip">Zip/Postal</label>
+                                                                <input type="number" class="form-control" id="ParmanentZip" asp-for="EmpParmanentZip" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpParmanentArea">Thana/Area</label>
+                                                                <input type="text" class="form-control" id="ParmanentArea" asp-for="EmpParmanentArea" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpParmanentAddress">Strate Address</label>
+                                                                <input type="text" class="form-control" id="ParmanentAddress" asp-for="EmpParmanentAddress" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <h4>Present Address: </h4>
+                                                    <hr />
+                                                    <div class="row tr">
+                                                        <div class=" col-md-5 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpPresentDistrict">Present District</label>
+                                                                <select class="form-control" name="EmpPresentDistrict" asp-for="EmpPresentDistrict">
+                                                                    <option value="Bagerhat">Bagerhat</option>
+                                                                    <option value="Bandarban">Bandarban</option>
+                                                                    <option value="Barguna">Barguna</option>
+                                                                    <option value="Barisal">Barisal</option>
+                                                                    <option value="Bhola">Bhola</option>
+                                                                    <option value="Bogra">Bogra</option>
+                                                                    <option value="Brahmanbaria">Brahmanbaria</option>
+                                                                    <option value="Chandpur">Chandpur</option>
+                                                                    <option value="Chittagong">Chittagong</option>
+                                                                    <option value="Chuadanga">Chuadanga</option>
+                                                                    <option value="Comilla">Comilla</option>
+                                                                    <option value="CoxsBazar">Cox'sBazar</option>
+                                                                    <option value="Dhaka">Dhaka</option>
+                                                                    <option value="Dinajpur">Dinajpur</option>
+                                                                    <option value="Faridpur">Faridpur</option>
+                                                                    <option value="Feni">Feni</option>
+                                                                    <option value="Gaibandha">Gaibandha</option>
+                                                                    <option selected value="Gazipur">Gazipur</option>
+                                                                    <option value="Gopalganj">Gopalganj</option>
+                                                                    <option value="Habiganj">Habiganj</option>
+                                                                    <option value="Jaipurhat">Jaipurhat</option>
+                                                                    <option value="Jamalpur">Jamalpur</option>
+                                                                    <option value="Jessore">Jessore</option>
+                                                                    <option value="Jhalokati">Jhalokati</option>
+                                                                    <option value="Jhenaidah">Jhenaidah</option>
+                                                                    <option value="Khagrachari">Khagrachari</option>
+                                                                    <option value="Khulna">Khulna</option>
+                                                                    <option value="Kishoreganj">Kishoreganj</option>
+                                                                    <option value="Kurigram">Kurigram</option>
+                                                                    <option value="Kushtia">Kushtia</option>
+                                                                    <option value="Lakshmipur">Lakshmipur</option>
+                                                                    <option value="Lalmonirhat">Lalmonirhat</option>
+                                                                    <option value="Madaripur">Madaripur</option>
+                                                                    <option value="Magura">Magura</option>
+                                                                    <option value="Manikganj">Manikganj</option>
+                                                                    <option value="Maulvibazar">Maulvibazar</option>
+                                                                    <option value="Meherpur">Meherpur</option>
+                                                                    <option value="Munshiganj">Munshiganj</option>
+                                                                    <option value="Mymensingh">Mymensingh</option>
+                                                                    <option value="Naogaon">Naogaon</option>
+                                                                    <option value="Narail">Narail</option>
+                                                                    <option value="Narayanganj">Narayanganj</option>
+                                                                    <option value="Narsingdi">Narsingdi</option>
+                                                                    <option value="Natore">Natore</option>
+                                                                    <option value="Nawabganj">Nawabganj</option>
+                                                                    <option value="Netrokona">Netrokona</option>
+                                                                    <option value="Nilphamari">Nilphamari</option>
+                                                                    <option value="Noakhali">Noakhali</option>
+                                                                    <option value="Pabna">Pabna</option>
+                                                                    <option value="Panchagarh">Panchagarh</option>
+                                                                    <option value="Patuakhali">Patuakhali</option>
+                                                                    <option value="Pirojpur">Pirojpur</option>
+                                                                    <option value="Rajbari">Rajbari</option>
+                                                                    <option value="Rajshahi">Rajshahi</option>
+                                                                    <option value="Rangamati">Rangamati</option>
+                                                                    <option value="Rangpur">Rangpur</option>
+                                                                    <option value="Satkhira">Satkhira</option>
+                                                                    <option value="Shariatpur">Shariatpur</option>
+                                                                    <option value="Sherpur">Sherpur</option>
+                                                                    <option value="Sirajganj">Sirajganj</option>
+                                                                    <option value="Sunamganj">Sunamganj</option>
+                                                                    <option value="Sylhet">Sylhet</option>
+                                                                    <option value="Tangail">Tangail</option>
+                                                                    <option value="Thakurgaon">Thakurgaon</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpPresentZip">Zip/Postal</label>
+                                                                <input type="number" class="form-control" id="Presentzip" asp-for="EmpPresentZip" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpPresentArea">Thana/Area</label>
+                                                                <input type="text" class="form-control" id="PresentArea" asp-for="EmpPresentArea" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 td">
+                                                            <div class="form-group">
+                                                                <label for="EmpPresentAddress">Strate Address</label>
+                                                                <input type="text" class="form-control" id="ParmanentAddress" asp-for="EmpPresentAddress" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    @*educationdetails*@
+                                                    <h4>Education: </h4>
+                                                    <hr />
+                                                    <div id="educationdetails">
+                                                        <div class="row tr">
+                                                            <div class=" col-md-3 td">
+                                                                <div class="mb-4 from-control">
+                                                                    <label for="EmpEduTitle" class="form-label">Edu. Title</label>
+                                                                    <input type="text" class="form-control" id="EducationTitle" name="EmpEduTitle" asp-for="EmpEduTitle">
+                                                                </div>
+                                                            </div>
+                                                            <div class=" col-md-3 td">
+                                                                <div class="mb-3">
+                                                                    <label for="EmpEduPassY" class="form-label">Pass Year</label>
+                                                                    <input type="number" class="form-control" id="PassYear" name="EmpEduPassY" asp-for="EmpEduPassY">
+                                                                </div>
+                                                            </div>
+                                                            <div class=" col-md-3 td">
+                                                                <div class="mb-3">
+                                                                    <label for="EmpEduStatus" class="form-label">Pass Status</label>
+                                                                    <select class="form-control" name="EmpEduStatus" id="PassStatus" asp-for="EmpEduStatus">
+                                                                        <option value="Pass">Pass</option>
+                                                                        <option value="Running">Running</option>
+                                                                        <option value="Fail">Fail</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class=" col-md-3 td">
+                                                                <div class="mb-3">
+                                                                    <label for="EducationGrade" class="form-label">Pass Grade</label>
+                                                                    <input type="text" class="form-control" id="EducationGrade" name="EmpEduPassG" asp-for="EmpEduPassG">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div> <!-- /.educationdetails -->
+
+                                                </div><!-- /.box-body -->
+
+                                            </div><!-- /.row Right side-->
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.form -->
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+
+                        </div><!-- /.tab-pane Personal Information-->
+
+                        <div class="tab-pane" id="tab_3">
+                            <div class='box box-info'>
+                                <div class='box-body'>
+                                    <div class='row'>
+                                        <div class='row col-md-4'>
+                                            <div role="form">
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label for="EmpGross">Gross Salary</label>
+                                                        <input type="number" class="form-control" id="grosssalary" name="EmpGross" asp-for="EmpGross" />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpBasic">Basic Salary</label>
+                                                        <input type="number" class="form-control" id="basicsalary" name="EmpBasic" asp-for="EmpBasic" readonly />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="EmpHouse">House Rent</label>
+                                                        <input type="number" class="form-control" id="houserent" name="EmpHouse" asp-for="EmpHouse" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpMedical">Medical</label>
+                                                        <input type="number" class="form-control" id="medical" name="EmpMedical" asp-for="EmpMedical" value="600" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpConveyance">Conveyance</label>
+                                                        <input type="number" class="form-control" id="conveyance" name="EmpConveyance" asp-for="EmpConveyance" value="350" readonly />
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="EmpFood">Food</label>
+                                                        <input type="number" class="form-control" id="food" name="EmpFood" asp-for="EmpFood" value="900" readonly />
+                                                    </div>
+
+                                                </div><!-- /.box-body -->
+                                            </div>
+                                        </div>
+                                    </div><!-- /.row -->
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.tab-pane Salery Informaiton-->
+
+                        <div class="tab-pane" id="tab_4">
+                            <div class='box box-danger'>
+                                <div class='box-body'>
+                                    <div class='row'>
+                                        <div class='row col-md-4'>
+                                            <div role="form">
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="EmpPayMethodName">Payment Method</label>
+                                                        <select class="form-control" id="SalaryMethod" name="EmpPayMethodName" asp-for="EmpPayMethodName">
+                                                            <option selected disabled>Select Payment method</option>
+                                                            <option value="Bank">Bank Salary</option>
+                                                            <option value="MFS">MFS</option>
+                                                            <option value="Cash">Cash</option>
+                                                        </select>
+                                                    </div><!---select button-->
+
+                                                    <div class="form-group mobile" hidden>
+                                                        <label class="form-label" for="EmpPayMobileName">Mobile Banking</label>
+                                                        <select class="form-control" id="salaryinfo" name="EmpMFSName" asp-for="EmpMFSName">
+                                                            <option selected disabled>Select Payment method</option>
+                                                            <option value="Bksh">Bkash</option>
+                                                            <option value="Rocket">Rocket</option>
+                                                            <option value="Upay">Upay</option>
+                                                            <option value="Cash">Cash</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mfs" hidden>
+                                                        <label class="mfslabel">MFS Number</label>
+                                                        <input type="text" class="form-control mfslabel" id="MFSnumber" name="MFSnumber" asp-for="MFSnumber" />
+                                                    </div>
+                                                    <div class="form-group bank" hidden>
+                                                        <label for="EmpBankName">Bank Name</label>
+                                                        <input type="text" class="form-control" id="BankName" name="EmpBankName" asp-for="EmpBankName" />
+                                                    </div>
+                                                    <div class="form-group bank-branch" hidden>
+                                                        <label for="EmpBankBranch">Bank Branch</label>
+                                                        <input type="text" class="form-control" id="BankBranch" name="EmpBankBranch" asp-for="EmpBankBranch" />
+                                                    </div>
+                                                    <div class="form-group bank-account" hidden>
+                                                        <label for="EmpBankAcc">Bank Account Number</label>
+                                                        <input type="text" class="form-control" id="BankAccNum" name="EmpBankAcc" asp-for="EmpBankAcc" />
+                                                    </div>
+
+                                                </div><!-- /.box-body -->
+                                            </div>
+                                        </div>
+                                    </div><!-- /.row -->
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.tab-pane Payment Information-->
+
+                        <div class="tab-pane" id="tab_5">
+                            <div class='box box-success'>
+                                <div class='box-body'>
+                                    <div class='row'>
+                                        <div class='row col-md-4'>
+                                            <div role="form">
+                                                <div class="box-body">
+
+                                                    <div class="form-group">
+                                                        <label for="EmpPrfImg">Upload Your Photo (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpPrfImg" name="EmpPrfImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Upload NID Photo (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpNIDImg" name="EmpNIDImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-keyboard-o"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Upload Birth Certificate (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpBodImg" name="EmpBodImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-file"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Upload Passport (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpPassportImg" name="EmpPassportImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Upload Contract Paper (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpContractImg" name="EmpContractImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-files-o"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Upload Signature (jpg/PNG)</label>
+                                                        <div class="input-group">
+                                                            <input type="file" asp-for="EmpSigImg" name="EmpSigImg" class="form-control" />
+                                                            <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div><!-- /.box-body -->
+                                            </div>
+                                        </div>
+                                    </div><!-- /.row -->
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.tab-pane Documents-->
+
+
+                    </div><!-- /.tab-content -->
+                </div><!-- nav-tabs-custom -->
+                <button class="btn btn-danger fixed-bottom">Submit</button>
+            </div><!-- /.col -->
+
+        </form>
+    </div> <!-- /.row -->
+    <!-- END CUSTOM TABS -->
+
+
+    @section Scripts{
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+        //Check IdCard No same?
+
+        $('#EmpIDCard').keyup(function () {
+            var idCardNo = $('#EmpIDCard').val();
+            if (idCardNo != null && idCardNo != '') {
+                $.getJSON('@Url.Action("CheckIdCardNo", "EmpCreate")', { idcard: idCardNo }, function (subheads) {
+                    if (subheads == 1) {
+                        var span = '<span class="text-danger">ID Card: Already Exist</span>'
+                        $('#iderror').html(span);
+                    } else {
+                        var span = '<span class="text-success">ID Card: Available</span>'
+                        $('#iderror').html(span);
+
+                    }
+                });
+            } else {
+                $('#iderror').text('ID Card No');
+            }
+        });
+
+        //Check EmpSecrateCode No same?
+
+    $('#empscode').keyup(function () {
+        var code = $('#empscode').val();
+        console.log(code);
+        if (code != null && code != '') {
+            $.getJSON('@Url.Action("CheckSecrateCode", "EmpCreate")', { code: code }, function (subheads) {
+                    if (subheads == 1) {
+                        var span = '<span class="text-danger">Secrate Code: Already Exist</span>'
+                        $('#iderrors').html(span);
+                    } else {
+                        var span = '<span class="text-success">Secrate Code: Available</span>'
+                        $('#iderrors').html(span);
+
+                    }
+                });
+            } else {
+            $('#iderrors').text('Secrate Code');
+            }
+        });
+
+        </script>
+
+        <script>
+
+        //select Company get department
+        $(document).ready(function () {
+            $('#companysid').change(function () {
+                var companyid = $('#companysid').val();
+
+                $('#deppid').find("option:not(:first)").remove();
+                $('#seccid').find("option:not(:first)").remove();
+                $('#optionFloor').prop('selected', true);
+
+
+                if (companyid != null && companyid != '') {
+                    $.getJSON('@Url.Action("GetDept")', { companyID: companyid }, function (subheads) {
+                        //console.log(subheads);
+                        $.each(subheads, function (index, subhead) {
+
+                            $('#deppid').append('<option value = "' + subhead.departmentID + '">' + subhead.departmentName + '</option>');
+                        });
+                    });
+                }
+            });
+
+        });
+
+        //select department get section
+        $(document).ready(function () {
+            $('#deppid').change(function () {
+                var depid = $('#deppid').val();
+
+                $('#seccid').find("option:not(:first)").remove();
+                $('#optionFloor').prop('selected', true);
+
+                if (depid != null && depid != '') {
+                    $.getJSON('@Url.Action("GetSec")', { depID: depid }, function (subheads) {
+
+                        $.each(subheads, function (index, subhead) {
+
+                            $('#seccid').append(`<option value = "` + subhead.sectionId + `">` + subhead.sectionName + `</option>`);
+                        });
+                    });
+                }
+            });
+
+        });
+
+        //select floor get line by (sectionID + floorID) now it is free for user requerments
+        $(document).ready(function () {
+            $('').change(function () {
+                var secid = $('#seccid').val();
+                var flrid = $('#floorsid').val();
+
+                $('#linnid').find("option:not(:first)").remove();
+
+                if (flrid != null && flrid != '') {
+                    $.getJSON('@Url.Action("GetLine")', { secID: secid, flrID: flrid }, function (subheads) {
+
+                        $.each(subheads, function (index, subhead) {
+
+                            $('#linnid').append(`<option value = "` + subhead.lineId + `">` + subhead.lineTitle + `</option>`);
+                        });
+
+                    });
+                }
+            });
+
+        });
+
+        //Dedignation select
+        $('#desiggid').change(function () {
+            var Designation = $('#desiggid').val();
+            if (Designation != null && Designation != "") {
+                $.getJSON('@Url.Action("CheckDesignation")', { designationId: Designation }, function (subheads) {
+                    //console.log(subheads);
+                    if (subheads != null && subheads != "") {
+
+                        $('#gradeauto').val(subheads.grade)
+                        $('#attenbonus').val(subheads.attenBonus)
+                        $('#overtime').val(subheads.overTime)
+                        $('#holidayallow').val(subheads.holidayAllowance)
+                        $('#nightbill').val(subheads.nightBill)
+                        $('#lunchbill').val(subheads.lunchBill)
+                        $('#tiffinbill').val(subheads.tiffinBill)
+                        $('#iftarbill').val(subheads.iftarBill)
+
+                    } else {
+                        alert("Failed");
+                    }
+                });
+            }
+
+        });
+
+        //Check DateOfBirth 18 or not
+        $('#DateOfBirth').change(function () {
+
+            var birthDate = $('#DateOfBirth').val();
+
+            if (birthDate != null && birthDate != '') {
+
+                var inputDate = new Date(birthDate);
+
+                var nowYear = new Date();
+                var DiffYear = (nowYear - inputDate);
+                var oneDay = 1000 * 60 * 60 * 24;
+                var day = Math.floor(DiffYear / oneDay);
+                var Year = parseInt(day / 365);
+                if (Year < 18) {
+
+                    alert("Age Should be 18");
+                    $('#DateOfBirth').val('');
+                }
+            }
+        });
+
+        //picture upload
+        $(".imgAdd").click(function () {
+            $(this).closest(".row").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
+        });
+        $(document).on("click", "i.del", function () {
+            $(this).parent().remove();
+        });
+        $(function () {
+            $(document).on("change", ".uploadFile", function () {
+                var uploadFile = $(this);
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+                if (/^image/.test(files[0].type)) { // only image file
+                    var reader = new FileReader(); // instance of the FileReader
+                    reader.readAsDataURL(files[0]); // read the local file
+
+                    reader.onloadend = function () { // set image data as background of div
+                        //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                        uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
+                    }
+                }
+
+            });
+        });
+
+        //Gross Salary Short Calculation
+        $(document).ready(function () {
+            $('#grosssalary').change(function () {
+                var gross = $('#grosssalary').val();
+
+                var basicH = parseInt(gross) - 1850;
+                var basic = (parseInt(basicH) / 3) * 2;
+                var house = parseInt(basic) / 2;
+                var intbasic = Math.floor(basic);
+                var inthouse = Math.floor(house);
+                $('#basicsalary').val(intbasic);
+                $('#houserent').val(inthouse);
+
+            });
+
+        });
+
+        //payment method SalaryMethod
+        $(document).ready(function () {
+            $('#SalaryMethod').change(function () {
+
+                var Ptype = $('#SalaryMethod').val();
+
+                if (Ptype == "Cash") {
+                    $('.mobile').hide();
+                    $('.mfs').hide();
+                    $('.bank').hide();
+                    $('.bank-branch').hide();
+                    $('.bank-account').hide();
+                }
+                if (Ptype == "MFS") {
+                    $('.mobile').show();
+                    $('.mfs').show();
+                    $('.bank').hide();
+                    $('.bank-branch').hide();
+                    $('.bank-account').hide();
+                }
+                if (Ptype == "Bank") {
+                    $('.mobile').hide();
+                    $('.mfs').hide();
+                    $('.bank').show();
+                    $('.bank-branch').show();
+                    $('.bank-account').show();
+                }
+            });
+
+        });
+
+        </script>
+
+        <script type="text/javascript">
+
+        </script>
+    }

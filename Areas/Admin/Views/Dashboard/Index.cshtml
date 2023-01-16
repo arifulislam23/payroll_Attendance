@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "DashBoard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@ViewBag.RegularEmp</h3>
+                <p>Regular Employees</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <a asp-action="EmployeeList" asp-controller="Employee" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@ViewBag.RegineEmp</h3>
+                <p>Regine Employees</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <a asp-action="EmployeeList" asp-controller="Employee" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div class="inner">
+                <h3>@ViewBag.LeftyEmp</h3>
+                <p>Lefty Employees</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <a asp-action="EmployeeList" asp-controller="Employee" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>0</h3>
+                <p>Leave Employee</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-users"></i>
+            </div>
+            <a asp-action="EmployeeList" asp-controller="Employee" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+
+</div><!-- ./col -->

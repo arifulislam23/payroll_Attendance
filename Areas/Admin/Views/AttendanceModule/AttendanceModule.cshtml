@@ -1,0 +1,220 @@
+﻿@model KS_Payroll.Areas.Admin.Data.AttendanceModule
+
+@{
+    IEnumerable<AttendanceModule> AttendanceModuleList = ViewData["AttendanceModule"] as IEnumerable<AttendanceModule>;
+
+    ViewData["Title"] = "AttendanceModule";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Attendance Module Setup</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="AttendanceModule_Create" asp-controller="AttendanceModule">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="AModuleName">Machine Name*</label>
+                        <input type="text" class="form-control" asp-for="AModuleName" id="AModuleName" autocomplete="off" required
+                               placeholder="Give any title">
+                    </div>
+                    <div class="form-group">
+                        <label for="TimeName">In Time Field Name*</label>
+                        <input type="text" class="form-control" asp-for="TimeName" id="TimeName" autocomplete="off" required
+                               placeholder="eventDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="TimeName">Out Time Field Name</label>
+                        <input type="text" class="form-control" asp-for="Time2Name" id="Time2Name" autocomplete="off" 
+                               placeholder="Not required">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date Field name*</label>
+                        <input type="text" class="form-control" asp-for="DateName" id="DateName" autocomplete="off" required
+                               placeholder="eventTime">
+                    </div>
+                     <div class="form-group">
+                         <label for="SecretCode">Emplyee Secret Code Field name*</label>
+                        <input type="text" class="form-control" asp-for="SecretCode" id="SecretCode" autocomplete="off" required
+                               placeholder="Ex: personName for HAMS">
+                    </div>
+                     <div class="form-group">
+                         <label for="SecretCode">Table Name</label>
+                        <input type="text" class="form-control" asp-for="TableName" id="TableName" autocomplete="off" required
+                               placeholder="only for mdb file">
+                    </div>
+                     <div class="form-group">
+                         <label for="SecretCode">File Type*</label>
+                        <input type="text" class="form-control" asp-for="FileType" id="FileType" autocomplete="off" required
+                               placeholder="Ex: mdb, csv">
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div><!-- /.box -->
+
+
+    </div><!--/.col (reghit) -->
+
+    <div class="col-md-8">
+
+        <div class="box box-primary">
+            <table class="table table-striped table-responsive-md" id="protable">
+                <thead>
+                    <tr>
+                        <th>
+                            Machine Name
+                        </th>
+                        <th>
+                           In Time Field
+                        </th>
+                        <th>
+                            Out Time Field
+                        </th>
+                        <th>
+                            Date Field
+                        </th>
+                        <th>
+                            Secret Code Field
+                        </th>
+                        <th>
+                            Table Name
+                        </th>
+                        <th>
+                            File Type
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var dpt in AttendanceModuleList)
+                    {
+                        <tr>
+                            <td>@dpt.AModuleName</td>
+                            <td>@dpt.TimeName</td>
+                            <td>@dpt.Time2Name</td>
+                            <td>@dpt.DateName</td>
+                            <td>@dpt.SecretCode</td>
+                            <td>@dpt.TableName</td>
+                            <td>@dpt.FileType</td>
+                            <td>
+
+                                <button data-manme="@dpt.AModuleName" data-id="@dpt.AMid"
+                                        data-tname="@dpt.TimeName" data-scode="@dpt.SecretCode" data-dname="@dpt.DateName"  
+                                        data-ttname="@dpt.Time2Name" data-ftype="@dpt.FileType" data-tablename="@dpt.TableName"
+                                        class="btn btn-primary editDept"
+                                        type="button" data-toggle="modal" data-target="#dep">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div><!-- /.box -->
+
+    </div><!--/.col (left) -->
+</div>
+
+<!-- Modal For Department -->
+<div class="modal fade" id="dep" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" asp-action="AttendanceModule_Edit" asp-controller="AttendanceModule">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="AModuleName">Machine Name</label>
+                        <input type="text" class="form-control" asp-for="AModuleName" id="mname" autocomplete="off" required
+                               placeholder="Give any title">
+                    </div>
+                    <div class="form-group">
+                        <label for="TimeName">In Time Field Name</label>
+                        <input type="text" class="form-control" asp-for="TimeName" id="tname" autocomplete="off" required
+                               placeholder="eventDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="TimeName">Out Time Field Name</label>
+                        <input type="text" class="form-control" asp-for="Time2Name" id="ttname" autocomplete="off"
+                               placeholder="eventDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date Field name</label>
+                        <input type="text" class="form-control" asp-for="DateName" id="dname" autocomplete="off" required
+                               placeholder="eventTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="SecretCode">Emplyee Secret Code Field name</label>
+                        <input type="text" class="form-control" asp-for="SecretCode" id="scode" autocomplete="off" required
+                               placeholder="Ex: personName for HAMS">
+                    </div>
+                    <div class="form-group">
+                        <label for="SecretCode">Table Name</label>
+                        <input type="text" class="form-control" asp-for="TableName" id="tablename" autocomplete="off" required
+                               placeholder="PubEvent">
+                    </div>
+                    <div class="form-group">
+                        <label for="SecretCode">File Type</label>
+                        <input type="text" class="form-control" asp-for="FileType" id="ftype" autocomplete="off" required
+                               placeholder="Ex: csv, mdb">
+                    </div>
+                    <input type="hidden" id="amid" asp-for="AMid" />
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Update</button>
+
+                </div>
+
+            </form><!---/.form-->
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        /*script for Company*/
+        $(".editDept").click(function () {
+
+            var id = $(this).data('id');
+            var manme = $(this).data('manme');
+            var tname = $(this).data('tname');
+            var ttname = $(this).data('ttname');
+            var scode = $(this).data('scode');
+            var dname = $(this).data('dname');
+            var ftype = $(this).data('ftype');
+            var tablename = $(this).data('tablename');
+
+            document.getElementById('dname').value = dname;
+            document.getElementById('scode').value = scode;
+            document.getElementById('tname').value = tname;
+            document.getElementById('ttname').value = ttname;
+            document.getElementById('mname').value = manme;
+            document.getElementById('amid').value = id;
+            document.getElementById('dltid').value = id;
+            document.getElementById('ftype').value = ftype;
+            document.getElementById('tablename').value = tablename;
+        });
+    </script>
+
+}

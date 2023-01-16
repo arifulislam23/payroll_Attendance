@@ -1,0 +1,137 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.Floor
+@{
+    IEnumerable<Floor> FloorList = ViewData["floors"] as IEnumerable<Floor>;
+}
+
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Create Floor</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="Create_Floor" asp-controller="Floor">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Floor Name</label>
+                        <input type="text" class="form-control" asp-for="FloorName" id="Fname" autocomplete="off" required
+                               placeholder="Floor Title">
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div><!-- /.box -->
+
+
+    </div><!--/.col (reghit) -->
+
+    <div class="col-md-6">
+
+        <div class="box box-primary">
+            <table class="table table-striped table-responsive-md" id="protable">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Floor Title
+                        </th>
+                        <th>
+                            Update
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var dpt in FloorList)
+                    {
+                        <tr>
+                            <td>@dpt.FloorId</td>
+                            <td>@dpt.FloorName</td>
+                            <td>
+
+                                <button data-Cname="@dpt.FloorName" data-id="@dpt.FloorId" class="btn btn-primary editDept"
+                                        type="button" data-toggle="modal" data-target="#dep">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div><!-- /.box -->
+
+    </div><!--/.col (left) -->
+</div>
+
+<!-- Modal For Department -->
+<div class="modal fade" id="dep" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" asp-action="Floor_Edit" asp-controller="Floor">
+                <div class="box-body">
+
+                    <div class="form-group">
+
+                        <label for="exampleInputEmail1">Floor ID</label>
+                        <input type="text" class="form-control" asp-for="FloorId" id="fid" readonly>
+                    </div>
+                
+                    <div class="form-group">
+
+                        <label for="exampleInputEmail1">Floor Name</label>
+                        <input type="text" class="form-control" asp-for="FloorName" id="modalCname"
+                               placeholder="Floor Title">
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Update</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        /*script for Company*/
+        $(".editDept").click(function () {
+
+            var id = $(this).data('id');
+            var name = $(this).data('cname');
+
+            document.getElementById('modalCname').value = name;
+            document.getElementById('fid').value = id;
+        });
+    </script>
+
+}

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<KS_Payroll.Areas.Admin.Data.Loans>
+
+@{
+    ViewData["Title"] = "LoanHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table class="table" id="ProTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpIDCard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.comid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimePerioad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Short_Description)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmpIDCard)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.comid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimePerioad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Short_Description)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#ProTable').dataTable({
+                "lengthChange": false,
+                "pageLength": 50
+            });
+
+        });
+
+    </script>
+
+}

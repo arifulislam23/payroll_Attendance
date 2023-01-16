@@ -1,0 +1,198 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.Uunemployees
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    //EmpStats
+}
+<head>
+    <style>
+        img {
+            max-width: 50%;
+        }
+
+        img {
+            vertical-align: middle;
+            border-style: none;
+        }
+
+        .about-avatar {
+            margin-top: 30px;
+        }
+
+        .about-list label {
+            color: #20247b;
+            font-weight: 600;
+            width: 88px;
+            margin: 0;
+            position: relative;
+        }
+    </style>
+</head>
+
+<div class="row">
+    <form role="form" asp-action="CreateRegine" asp-controller="Regine">
+        <div class="col-md-4">
+
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Employee Information</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+
+                <div class="box-body">
+                    <input type="hidden" asp-for="empid" id="empid">
+                    <div class="form-group">
+                        <label for="CompanyId">Company</label>
+
+                        <select required class="form-control" id="comid" name="comid" asp-items="@(new SelectList(ViewBag.companies, "Cid","CompanyName"))" onchange="DepartmentNameForDisabled()">
+                            <option value="Select Company" selected disabled>Select Company</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ID Number</label>
+                        <input type="text" class="form-control" id="eidcardnum" asp-for="EmpIDCard" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Regine/Lefty</label>
+                        <select id="LeftType" name="LeftType" class="form-control" required>
+
+                            <option selected disabled>Select Type</option>
+                            <option value="Regine">Regine</option>
+                            <option value="Lefty">Lefty</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date</label>
+                        <input type="date" class="form-control" id="asignDate"  asp-for="AsingDate" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Short Description</label>
+                        <input type="text" class="form-control" id="desc"  asp-for="Short_Description" required/>
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+
+            </div><!-- /.box -->
+
+
+        </div><!--/.col (reghit) -->
+        <div class="col-md-8">
+
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Employee Information</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+
+                <div class="box-body">
+
+                    <div class="row about-list">
+
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>Joining Date</label>
+                                <input type="text" class="form-control" id="joningDate" asp-for="JoningDate"/>
+                            </div>
+                            <div class="media">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="empName" />
+                            </div>
+                            <div class="media">
+                                <label>Phone:</label>
+                                <input type="text" class="form-control" id="phone" />
+                            </div>
+                            <div class="media">
+                                <label>Designation</label>
+                                <input type="text" class="form-control" id="designation" asp-for="Designation" />
+                            </div>
+                            <div class="media">
+                                <label>LastAttendance</label>
+                                <input type="text" class="form-control" id="lastAttendance" asp-for="LastAttendance"/>
+                            </div>
+
+                        </div>
+
+                        
+                        <div class="col-lg-6">
+                            <div class="about-avatar">
+                                
+                                <img  title="" alt="No Image Uploaded" id="prf_image">
+                            </div>
+                            <label id="empStats"></label>
+                        </div>
+
+                    </div><!-- /.box-body -->
+
+                </div><!-- /.box -->
+
+            </div><!--/.col (left) -->
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script>
+        $("#btnSubmit").click(function () {
+            var eidnum = $("#eidcardnum").val();
+            var comid = $("#comid").val();
+
+            if (eidnum != null || comid != null) {
+
+                 @*$.getJSON('@Url.Action("CreateRegine")', { invenid: invenid }, function (remainqty) {
+
+                        $('#unitTitle').text(remainqty);
+
+                    })*@
+            }
+
+        });
+
+
+          //For Get emp Details
+        $("#eidcardnum").change(function () {
+
+            var eidnum = $("#eidcardnum").val();
+            var comid = $("#comid").val();
+
+            if (eidnum != null && comid != null && eidnum != 0)
+            {
+
+
+                $.getJSON('@Url.Action("GetEmpInfo", "Regine")', { eidnum: eidnum, comid: comid}, function (mainhead) {
+
+                    console.log(mainhead);
+
+                    var pic = "/UploadedProfile/" + eidnum + ".jpg";
+                    $("#prf_image").attr("src", pic);
+                    //alert(pic);
+
+
+                    $('#empName').val(mainhead.empName);//Employee Name
+                    $('#joningDate').val(mainhead.jdate);//Employee JoiningDate
+                    $('#phone').val(mainhead.empPhone);//Employee JoiningDate
+                    $('#designation').val(mainhead.empDesignationTitle);//Employee JoiningDate
+                    $('#lastAttendance').val(mainhead.lastAttendance);//Employee JoiningDate
+                    $('#empid').val(mainhead.empid);//Employee JoiningDate
+                    $('#empStats').html(mainhead.empStats);//Employee JoiningDate
+
+
+
+
+                });
+            }
+
+
+        });
+    </script>
+
+}

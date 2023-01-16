@@ -1,0 +1,147 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.Section
+
+@{
+    IEnumerable<Comapny> CompaniesList = ViewData["Companys"] as IEnumerable<Comapny>;
+    IEnumerable<KS_Payroll.Areas.Admin.ViewModels.DepartmentVM> DepartmentsList = ViewData["Departments"] as IEnumerable<KS_Payroll.Areas.Admin.ViewModels.DepartmentVM>;
+
+    IEnumerable<KS_Payroll.Areas.Admin.ViewModels.DepartmentVM> SectiontList = ViewData["Sections"] as IEnumerable<KS_Payroll.Areas.Admin.ViewModels.DepartmentVM>;
+    ViewData["Title"] = "Department";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Create Section</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="Create_Section" asp-controller="Section">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Section Name</label>
+                        <input type="text" class="form-control" asp-for="SectionName" id="Dname"required
+                               placeholder="Section Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Department </label>
+
+                        <select required name="DepartmentID" asp-items="@(new SelectList(ViewBag.departments, "DepartmentID","DepartmentName"))" class="form-control" aria-label="Default select example">
+                            <option selected disabled>Select Department</option>
+                        </select>
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div><!-- /.box -->
+
+
+    </div><!--/.col (reghit) -->
+    <div class="col-md-8">
+
+        <div class="box box-primary">
+            <table class="table table-striped table-responsive-md" id="protable">
+                <thead>
+                    <tr>
+                        <th>
+                            Section ID
+                        </th>
+                        <th>
+                            Section Name
+                        </th>
+                        <th>
+                            Department Name
+                        </th>
+                        <th>
+                            Update
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (KS_Payroll.Areas.Admin.ViewModels.DepartmentVM sec in SectiontList)
+                    {
+                        <tr>
+                            <td>@sec.SecID</td>
+                            <td>@sec.SectionName</td>
+                            <td>@sec.DepartmentName</td>
+                            <td>
+                                <button data-id="@sec.SecID"
+                                       data-sectionname="@sec.SectionName"
+                                       data-Depid="@sec.DepID"
+                                       class="btn btn-primary editDept" type="button"
+                                       data-toggle="modal" data-target="#dep">
+                                <i class="fa fa-pencil-square-o"></i></button>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div><!-- /.box -->
+
+    </div><!--/.col (left) -->
+</div>
+<!-- Modal For Department -->
+<div class="modal fade" id="dep" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" asp-action="Edit_Section" asp-controller="Section">
+                <div class="box-body">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Department Name</label>
+                        <input type="text" class="form-control" asp-for="SectionName" id="modol_SecName"
+                               placeholder="Department Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Company </label>
+                        <select id="modol_companyid" name="DepartmentID" asp-items="@(new SelectList(ViewBag.departments, "DepartmentID","DepartmentName"))" class="form-control" aria-label="Default select example">
+                            <option selected disabled>Select Department</option>
+                        </select>
+                    </div>
+
+                    <input type="hidden" class="form-control" asp-for="SectionId" id="modol_sec_id">
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+        $(".editDept").click(function () {
+            var Id = $(this).data('id');
+            var sectionName = $(this).data('sectionname');
+            var depID = $(this).data('depid');
+
+            document.getElementById('modol_sec_id').value = Id;
+            document.getElementById('modol_SecName').value = sectionName;
+            document.getElementById('modol_companyid').value = depID;
+        });
+    </script>
+
+}
+
+

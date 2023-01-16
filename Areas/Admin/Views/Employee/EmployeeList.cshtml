@@ -1,0 +1,117 @@
+﻿@model IEnumerable<KS_Payroll.Areas.Admin.Data.Employeeinfo>
+
+@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">All Employees List</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+
+
+
+        <table id="myTable" class="table table-bordered table-striped">
+
+            <thead>
+                <tr>
+                    <th>
+                        Profile
+                    </th>
+                    <th>
+                        ID No
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Section
+                    </th>
+                    <th>
+                        Joining Date
+                    </th>
+                    <th>
+                        Designation
+                    </th>
+                    <th>
+                        Grade
+                    </th>
+                    <th>
+                        Line
+                    </th>
+                    <th>
+                        Gender
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+
+                            @{
+                                string pc = item.EmpIDCard + ".jpg";
+                            }
+                            <img src="~/UploadedProfile/@pc" width="35" alt="No Image" onerror="src" asp-append-version="true" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpIDCard)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpSection)
+                        </td>
+                        <td>
+                            @item.EmpJoiningDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpDesignationTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpGrade)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpLine)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpGender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpPhone)
+                        </td>
+                        <td>
+                            <a asp-action="EmpDetails" asp-route-id="@item.empid">Details</a> |
+                            <a asp-action="EmpUpdate" asp-route-id="@item.empid">Update</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+@section Scripts{
+    <script src="~/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+    </script>
+
+
+}

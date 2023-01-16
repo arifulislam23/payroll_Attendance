@@ -1,0 +1,78 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.PunishmentFine
+
+
+@{
+    ViewData["Title"] = "Punishment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+   
+}
+<div class="row">
+    <form role="form" asp-action="PunishmentCreate" asp-controller="Punishment">
+        <div class="col-md-4">
+
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Employee Information</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+
+                <div class="box-body">
+                    <input type="hidden" asp-for="empid" id="empid">
+                    <div class="form-group">
+                        <label for="CompanyId">Company</label>
+
+                        <select required class="form-control" id="comid" name="comid" asp-items="@(new SelectList(ViewBag.coimpany, "Cid","CompanyName"))" onchange="DepartmentNameForDisabled()">
+                            <option value="Select Company" selected disabled>Select Company</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ID Number</label>
+                        <input type="text" class="form-control" id="eidcardnum" asp-for="EmpIDCard" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Amount</label>
+                        <input type="number" class="form-control" id="asignDate" asp-for="Amount" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date</label>
+                        <input type="date" class="form-control" id="asignDate" asp-for="Date" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="CompanyId">Month</label>
+
+                        <select required class="form-control" id="Month" name="Month" asp-for="Month">
+                            <option selected disabled>Select Month</option>
+                            <option value='1'>Janaury</option>
+                            <option value='2'>February</option>
+                            <option value='3'>March</option>
+                            <option value='4'>April</option>
+                            <option value='5'>May</option>
+                            <option value='6'>June</option>
+                            <option value='7'>July</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>October</option>
+                            <option value='11'>November</option>
+                            <option value='12'>December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Short Description</label>
+                        <input type="text" class="form-control" id="desc" asp-for="short_desc" required />
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+
+            </div><!-- /.box -->
+
+
+        </div><!--/.col (reghit) -->
+    </form>
+</div>

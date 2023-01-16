@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "AttenFileUpload";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+</head>
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+        <h3 class="box-title">Step 1: Upload the file </h3>
+        <div id="dropzone">
+            <form asp-action="Upload" class="dropzone needsclick dz-clickable" id="uploader">
+                <div class="dz-message needsclick">
+                    Drop files here or click to upload.<br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+
+
+}

@@ -1,0 +1,256 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.Leaveinfo
+
+@{
+
+
+
+    ViewData["Title"] = "Department";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/profile.css" />
+</head>
+
+<div class="row">
+
+    <div class="col-md-5">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Give Leave @ViewData["numberdays"]</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="Create_Leave" asp-controller="LeaveManagement">
+                <div class="box-body">
+
+                    <div class="form-group">
+                        <label for="CompanyId">Company </label>
+                        <span asp-validation-for="ComID" class="text-danger"></span>
+                        <select required class="form-control" id="comid" name="comid" asp-items="@(new SelectList(ViewBag.companies, "Cid","CompanyName"))">
+                            <option value="Select Company" selected disabled>Select Company</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Employee ID</label>
+                        <input type="text" class="form-control" asp-for="EmpCardID" id="eidcardnum" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Leave_title">Leave Type </label>
+                        <span asp-validation-for="Leave_Type" class="text-danger"></span>
+                        <select required class="form-control" id="leavetype" name="Leave_Type" asp-for="Leave_Type" asp-items="@(new SelectList(ViewBag.lines, "LeaveTitle","LeaveTitle"))">
+                            <option value="Select Company" selected disabled>Select Type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <input type="text" class="form-control" asp-for="Leave_desc" id="leave_desc" required />
+                    </div>
+
+
+
+
+                    <div class="form-group col-md-6">
+                        <label for="Leave_Start">Leave Start</label>
+                        <input type="date" class="form-control" id="Leave_Start" name="Leave_Start" asp-for="Leave_Start" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Leave_End">Leave End</label>
+                        <input type="date" class="form-control" id="Leave_End" name="Leave_End" asp-for="Leave_End" required />
+                    </div>
+
+                    
+                    <div class="form-check">
+                        <label class="form-check-label" for="Leave_Bonus">Attendance Bonus:</label>
+                        <input class="form-check-input" type="radio" name="Leave_Bonus" asp-for="Leave_Bonus" id="exampleRadios1" value="1">
+                        <label class="form-check-label" for="Leave_Bonus">
+                            Yes
+                        </label>
+                        <input class="form-check-input" type="radio" name="Leave_Bonus" asp-for="Leave_Bonus" id="exampleRadios2" value="0" checked>
+                        <label class="form-check-label" for="Leave_Bonus">
+                            No
+                        </label>
+                    </div>
+                      
+
+                </div><!-- /.box-body -->
+                
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+
+            </form>
+        </div><!-- /.box -->
+
+    </div><!--/.col (reghit) -->
+    <div class="col-md-6">
+
+       
+            <div class="layout" id="prf">
+                <div class="profile">
+                    <div class="profile__picture">
+                        <img id="prf_image" src="~/UploadedProfile/" alt="ananddavis" />
+                    </div>
+                    <div class="profile__header">
+                        <div class="profile__account">
+                            <h5 class="profile__username">
+                                
+                                <label id="empName">Not Nound</label><br>
+                                <label id="jdate">Joining date</label>
+                            </h5>
+                           
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="profile__stats">
+                        <div class="profile__stat">
+                            <div class="profile__icon profile__icon--gold">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="profile__value">
+                                <span id="asd1">0</span>
+                                <div class="profile__key">Leave Balance</div>
+                            </div>
+                        </div>
+                        <div class="profile__stat">
+                            <div class="profile__icon profile__icon--blue">
+                                <i class="fa fa-signal"></i>
+                            </div>
+                            <div class="profile__value">
+                                <span id="asd2">0</span>
+                                <div class="profile__key">Leave Used</div>
+                            </div>
+                        </div>
+                        <div class="profile__stat">
+                            <div class="profile__icon profile__icon--pink">
+                                <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="profile__value">
+                                <span id="asd3">0</span>
+                                <div class="profile__key">Available</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+       
+
+    </div><!--/.col (left) -->
+
+</div><!-- /.row -->
+
+
+
+@section Scripts{
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        document.getElementsByClassName('layout')[0].style.visibility = 'hidden';
+        var lbalance = 0;
+        function calculate_date(){
+            var Leave_Start = $("#Leave_Start").val();
+            var Leave_End = $("#Leave_End").val();
+            if (Leave_Start > Leave_End) {
+                //alert("Give Vaild Date");
+
+            }
+            else {
+                const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                const firstDate = new Date(Leave_Start);
+                const secondDate = new Date(Leave_End);
+
+                const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay)) + 1;
+
+                //alert(diffDays);
+
+
+                if (diffDays > lbalance) {
+                    //alert("diffDays > lbalance");
+                    document.getElementById("btnSubmit").disabled = true;
+                } else {
+                    document.getElementById("btnSubmit").disabled = false;
+                }
+            }
+        }
+        //$("#Leave_Start,#Leave_End").change(function () {
+        //    var Leave_Start = $("#Leave_Start").val();
+        //    var Leave_End = $("#Leave_End").val();
+        //    if (Leave_Start > Leave_End) {
+        //        //alert("Give Vaild Date");
+
+        //    }
+        //    else
+        //    {
+        //        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        //        const firstDate = new Date(Leave_Start);
+        //        const secondDate = new Date(Leave_End);
+
+        //        const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay)) + 1;
+
+        //        alert(diffDays);
+
+
+        //        if (diffDays > lbalance) {
+        //            alert("diffDays > lbalance");
+        //            document.getElementById("btnSubmit").disabled = true;
+        //        } else {
+        //            document.getElementById("btnSubmit").disabled = false;
+        //        }
+        //    }
+        //});
+
+
+        //For Get emp Details
+        $("#eidcardnum,#comid,#leavetype,#Leave_Start,#Leave_End").change(function () {
+
+            var eidnum = $("#eidcardnum").val();
+            var comid = $("#comid").val();
+            var ltype = $("#leavetype").val();
+
+            if (eidnum != null && comid != null && eidnum != 0 && comid !=0) {
+
+
+                $.getJSON('@Url.Action("GetEmpInfo","LeaveManagement")', { eidnum: eidnum, comid: comid, ltype: ltype }, function (mainhead) {
+
+                    console.log(mainhead);
+
+                    var pic = "/UploadedProfile/" + eidnum + ".jpg";
+                    $("#prf_image").attr("src", pic);
+                    //alert(pic);
+                   
+
+                    $('#empName').html(mainhead.empName);//Employee Name
+
+                    var d = mainhead.empjoiningdate;
+                    d = d.split('T')[0]; //remove time from joining datetime
+                    $('#jdate').html(d);
+
+                    $('#asd1').html(mainhead.leave_Days);//leave typs and days
+                    $('#asd2').html(mainhead.leave_Used);//leave typs and days
+                    $('#asd3').html(mainhead.leave_Balance);//leave typs and days
+                    lbalance = mainhead.leave_Balance;
+                    //alert(lbalance);
+
+                    document.getElementsByClassName('layout')[0].style.visibility = 'visible';
+                    calculate_date();//given date is valid?
+                });
+            }
+            document.getElementsByClassName('layout')[0].style.visibility = 'hidden';
+
+        });
+
+
+
+
+    </script>
+}
+

@@ -1,0 +1,148 @@
+﻿
+@model KS_Payroll.Areas.Admin.Data.Leave
+@{
+    IEnumerable<Leave> LeaveList = ViewData["leave"] as IEnumerable<Leave>;
+}
+
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Create Leaves</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="Create_Leave" asp-controller="Leave" asp-area="Admin">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Leave Name</label>
+                        <input type="text" class="form-control" asp-for="LeaveTitle" id="Fname" autocomplete="off"required
+                               placeholder="Leave Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Number of Days</label>
+                        <input type="number" class="form-control" asp-for="NoOfDays" id="Fname" autocomplete="off"required
+                               placeholder="Number of Days">
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div><!-- /.box -->
+
+
+    </div><!--/.col (reghit) -->
+
+    <div class="col-md-6">
+
+        <div class="box box-primary">
+            <table class="table table-striped table-responsive-md" id="protable">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Leave Name
+                        </th>
+                        <th>
+                            Nomber of Days
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var lv in LeaveList)
+                    {
+                            <tr>
+                                <td>@lv.LeaveId</td>
+                                <td>@lv.LeaveTitle</td>
+                                <td>@lv.NoOfDays</td>
+                                <td>
+
+                                    <button data-Lname="@lv.LeaveTitle" data-id="@lv.LeaveId"
+                                           data-NumDays="@lv.NoOfDays" class="btn btn-primary editDept"
+                                           type="button" data-toggle="modal" data-target="#dep">
+                                    <i class="fa fa-pencil-square-o"></i></button>
+
+                                </td>
+                            </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div><!-- /.box -->
+
+    </div><!--/.col (left) -->
+</div>
+
+<!-- Modal For Department -->
+<div class="modal fade" id="dep" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" asp-action="Leave_Edit" asp-controller="Leave">
+                <div class="box-body">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Leave ID</label>
+                        <input type="text" class="form-control" asp-for="LeaveId" id="modolid" placeholder="Leave Title" readonly>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Leave Name</label>
+                        <input type="text" class="form-control" asp-for="LeaveTitle" id="modolname" placeholder="Leave Title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Number of Days</label>
+                        <input type="text" class="form-control" asp-for="NoOfDays" id="modoldays" placeholder="Number of Days">
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Update</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        /*script for Company*/
+        $(".editDept").click(function () {
+
+            var id = $(this).data('id');
+            var name = $(this).data('lname');
+            var days = $(this).data('numdays');
+
+            document.getElementById('modolid').value = id;
+            document.getElementById('modolname').value = name;
+            document.getElementById('modoldays').value = days;
+        });
+    </script>
+
+}

@@ -1,0 +1,119 @@
+﻿@model KS_Payroll.Areas.Admin.ViewModels.AttendanceVM
+
+@{
+
+
+    IEnumerable<KS_Payroll.Areas.Admin.ViewModels.AttendanceVM> AbsentList = ViewData["absentlist"] as IEnumerable<KS_Payroll.Areas.Admin.ViewModels.AttendanceVM>;
+    ViewData["Title"] = "AttendanceAbsentList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css" />
+
+</head>
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">All Employees List</h3>
+    </div><!-- /.box-header -->
+    <div class="row">
+        <form asp-action="AttendanceList" asp-controller="AttendanceReport">
+            <div class="form-group col-md-2">
+                <label for="TimeName">Start Date</label>
+                <input type="date" class="form-control" asp-for="searchFromDate" autocomplete="off" placeholder="Start date" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="TimeName">End Date</label>
+                <input type="date" class="form-control" asp-for="searchToDate" autocomplete="off" />
+            </div>
+
+
+            <br>
+            <div class="input-group col-md-3">
+                <input type="text" class="form-control" asp-for="empIDCard" autocomplete="off" placeholder="Emp ID" />
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-warning">Search</button>
+                </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+        </form>
+    </div>
+    <div class="box-body">
+        <table class="table table-hover" id="ProTable">
+            <thead>
+                <tr>
+                    <th>
+                        ID Card
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        In Time
+                    </th>
+                    <th>
+                        Out Time
+                    </th>
+                     <th>
+                        Over Time
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (AbsentList != null)
+                {
+                    foreach (KS_Payroll.Areas.Admin.ViewModels.AttendanceVM item in AbsentList)
+                    {
+                        DateTime date = DateTime.Parse(item.Date.ToString());
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.empIDCard)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.empName)
+                            </td>
+                            <td>
+                                @date.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.EmpInTime
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpOutTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OverTime)
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts{
+
+    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#ProTable').dataTable({
+                "lengthChange": false,
+                "pageLength": 50
+            });
+            
+        });
+
+    </script>
+
+}

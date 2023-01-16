@@ -1,0 +1,716 @@
+﻿
+@model KS_Payroll.Areas.Admin.ViewModels.EmpinfoVM
+
+@{ IEnumerable<Comapny> CompaniesList = ViewData["Companys"] as IEnumerable<Comapny>;
+
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var pic = Model.EmpIDCard + ".jpg";
+}
+<head>
+
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+
+
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+        <div class="profile-nav col-md-3">
+            <div class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img src="~/UploadedProfile/@pic" alt="No Image">
+                    </a>
+                    <h1>@Model.EmpName</h1>
+                    <p>ID Card: @Model.EmpIDCard</p>
+                    <p>Secrate Code: @Model.EmpSecrateCode</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#"> <i class="fa fa-user"></i> Profile</a></li>
+                    <li>
+                        
+                        <a href="~/UploadedNID/@pic" download="profile_@pic" target="_blank" type="button" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i>National ID Card
+                        </a>
+                    
+                    </li>
+                    <li>
+                        
+                        <a href="~/UploadedDOB/@pic" download="NID_@pic" target="_blank" type="button" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i>Birth Certificate
+                        </a>
+                    
+                    </li>
+                    <li>
+                        
+                        <a href="~/UploadedPassport/@pic" download="Passport_@pic" target="_blank" type="button" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i>Passport
+                        </a>
+                    
+                    </li>
+                    <li>
+                        
+                        <a href="~/UploadedContract/@pic" download="ContractPaper_@pic" target="_blank" type="button" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i>Contract Paper
+                        </a>
+                    
+                    </li>
+
+                    <li>
+                        
+                        <a href="~/UploadedSing/@pic" download="Signature_@pic" target="_blank" type="button" style="margin-right: 5px;">
+                            <i class="fa fa-download"></i>Signature
+                        </a>
+                    
+                    </li>
+
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="profile-info col-md-9">
+
+            <div class="panel">
+
+                <div class="panel-body bio-graph-info">
+                    <h1 class="bg-warning">Personal Information</h1>
+                    <div class="row">
+                        <div class="bio-row">
+                            <p><span>Status </span>: @Model.EmpStats</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Name </span>: @Model.EmpName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Father Name </span>: @Model.EmpFName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Mother Name </span>: @Model.EmpMName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Spouse Name </span>: @Model.EmpSpouseName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Phone </span>: @Model.EmpPhone</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Emg person </span>: @Model.EmpEmgPerson</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Emg phone </span>: @Model.EmpEmgphone</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Emp DOB </span>: @Model.EmpDOB.ToShortDateString()</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Emp NID </span>: @Model.EmpNID</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Emg BOD certificate </span>: @Model.EmpBODCertificate</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Passport </span>: @Model.EmpPassport</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Gender </span>: @Model.EmpGender</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Married Status </span>: @Model.EmpMarriedStatus</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Child Number </span>: @Model.EmpChildNumber</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Nationality </span>: @Model.EmpNationality</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Religion </span>: @Model.EmpReligion</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Blood </span>: @Model.EmpBlood</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Nominee Name </span>: @Model.EmpNomineeName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Nominee Phn </span>: @Model.EmpNomineePhn</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Nominee Rlt </span>: @Model.EmpNomineeRlt</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Ref name </span>: @Model.EmpRefName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Ref number </span>: @Model.EmpRefNumber</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Height </span>: @Model.EmpHeight</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Weight </span>: @Model.EmpWeight</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Parmanent District </span>: @Model.EmpParmanentDistrict</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Parmanent Zip </span>: @Model.EmpParmanentZip</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Parmanent Area </span>: @Model.EmpParmanentArea</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Parmanent Address </span>: @Model.EmpParmanentAddress</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Present District </span>: @Model.EmpPresentDistrict</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Present zip </span>: @Model.EmpPresentZip</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Present area </span>: @Model.EmpPresentArea</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Present Address </span>: @Model.EmpPresentAddress</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Edu Title </span>: @Model.EmpEduTitle, @Model.EmpEduPassY, @Model.EmpEduStatus,  @Model.EmpEduPassG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--official info-->
+            <div class="profile-info col-md-13">
+
+                <div class="panel">
+
+                    <div class="panel-body bio-graph-info">
+                        <h1 class="bg-danger">Official Information</h1>
+                        <div class="row">
+
+                            <div class="bio-row">
+                                <p><span>Company Name </span>: @Model.EmpCompany</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>ID Card No </span>: @Model.EmpIDCard</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Secrate Code </span>: @Model.EmpSecrateCode</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Employee Name </span>: @Model.EmpName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Employee Type </span>: @Model.EmpType</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Department </span>: @Model.EmpDepartment</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Section </span>: @Model.EmpSection</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Floor </span>: @Model.EmpFloor</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Line </span>: @Model.EmpLine</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Joining Date </span>: @Model.EmpJoiningDate</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Shift </span>: @Model.EmpShift</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Designation Type </span>: @Model.EmpDesignationType</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Designation Title </span>: @Model.EmpDesignationTitle</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Grade </span>: @Model.EmpGrade</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Attend Bonus </span>: @Model.EmpAttenBonus</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>OverTime </span>: @Model.EmpOverTime</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Holiday Alw </span>: @Model.EmpHolidayAlw</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Night Bill </span>: @Model.EmpNightBill</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Lunch Bill </span>: @Model.EmpLunchBilll</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Tiffin Bill </span>: @Model.EmpTiffinBill</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Iftar Bill </span>: @Model.EmpIftarBill</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Salary info-->
+            <div class="profile-info col-md-13">
+
+                <div class="panel">
+
+                    <div class="panel-body bio-graph-info">
+                        <h1>Salary Information</h1>
+                        <div class="row">
+
+                            <div class="bio-row">
+                                <p><span>Gross </span>: @Model.EmpGross</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Basic </span>: @Model.EmpBasic</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>House </span>: @Model.EmpHouse</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Medical </span>: @Model.EmpMedical</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Conveyance </span>: @Model.EmpConveyance</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Food </span>: @Model.EmpFood</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Payment info-->
+            <div class="profile-info col-md-13">
+
+                <div class="panel">
+
+                    <div class="panel-body bio-graph-info">
+                        <h1>Payment Information</h1>
+                        <div class="row">
+
+                            <div class="bio-row">
+                                <p><span>PayMethod Name </span>: @Model.EmpPayMethodName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Bank Name </span>: @Model.EmpBankName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>MFS Name </span>: @Model.EmpMFSName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Bank Branch </span>: @Model.EmpBankBranch</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>Bank Acc </span>: @Model.EmpBankAcc</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span>MFS number </span>: @Model.MFSnumber</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+
+<style type="text/css">
+    body {
+        color: black;
+        background: #f1f2f7;
+        font-family: 'Open Sans', sans-serif;
+        padding: 0px !important;
+        margin: 0px !important;
+        font-size: 13px;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .profile-nav, .profile-info {
+        margin-top: 30px;
+    }
+
+        .profile-nav .user-heading {
+            background: #787876;
+            color: #fff;
+            border-radius: 4px 4px 0 0;
+            -webkit-border-radius: 4px 4px 0 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+            .profile-nav .user-heading.round a {
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                border: 10px solid rgba(255,255,255,0.3);
+                display: inline-block;
+            }
+
+            .profile-nav .user-heading a img {
+                width: 112px;
+                height: 112px;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+            }
+
+            .profile-nav .user-heading h1 {
+                font-size: 22px;
+                font-weight: 300;
+                margin-bottom: 5px;
+            }
+
+            .profile-nav .user-heading p {
+                font-size: 12px;
+            }
+
+        .profile-nav ul {
+            margin-top: 1px;
+        }
+
+            .profile-nav ul > li {
+                border-bottom: 1px solid #ebeae6;
+                margin-top: 0;
+                line-height: 30px;
+            }
+
+                .profile-nav ul > li:last-child {
+                    border-bottom: none;
+                }
+
+                .profile-nav ul > li > a {
+                    border-radius: 0;
+                    -webkit-border-radius: 0;
+                    color: #89817f;
+                    border-left: 5px solid #fff;
+                }
+
+                    .profile-nav ul > li > a:hover, .profile-nav ul > li > a:focus, .profile-nav ul li.active a {
+                        background: #f8f7f5 !important;
+                        border-left: 5px solid #fbc02d;
+                        color: #89817f !important;
+                    }
+
+                .profile-nav ul > li:last-child > a:last-child {
+                    border-radius: 0 0 4px 4px;
+                    -webkit-border-radius: 0 0 4px 4px;
+                }
+
+                .profile-nav ul > li > a > i {
+                    font-size: 16px;
+                    padding-right: 10px;
+                    color: #bcb3aa;
+                }
+
+    .r-activity {
+        margin: 6px 0 0;
+        font-size: 12px;
+    }
+
+
+    .p-text-area, .p-text-area:focus {
+        border: none;
+        font-weight: 300;
+        box-shadow: none;
+        color: #c3c3c3;
+        font-size: 16px;
+    }
+
+    .profile-info .panel-footer {
+        background-color: #f8f7f5;
+        border-top: 1px solid #e7ebee;
+    }
+
+        .profile-info .panel-footer ul li a {
+            color: #7a7a7a;
+        }
+
+    .bio-graph-heading {
+        background: #fbc02d;
+        color: #fff;
+        text-align: center;
+        font-style: italic;
+        padding: 40px 110px;
+        border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .bio-graph-info {
+        color: #4a4a4a;
+    }
+
+        .bio-graph-info h1 {
+            font-size: 22px;
+            font-weight: 300;
+            margin: 0 0 20px;
+        }
+
+    .bio-row {
+        width: 50%;
+        float: left;
+        margin-bottom: 10px;
+        padding: 0 15px;
+    }
+
+        .bio-row p span {
+            width: 100px;
+            display: inline-block;
+        }
+
+    .bio-chart, .bio-desk {
+        float: left;
+    }
+
+    .bio-chart {
+        width: 40%;
+    }
+
+    .bio-desk {
+        width: 60%;
+    }
+
+        .bio-desk h4 {
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+            .bio-desk h4.terques {
+                color: #4CC5CD;
+            }
+
+            .bio-desk h4.red {
+                color: #e26b7f;
+            }
+
+            .bio-desk h4.green {
+                color: #97be4b;
+            }
+
+            .bio-desk h4.purple {
+                color: #caa3da;
+            }
+
+    .file-pos {
+        margin: 6px 0 10px 0;
+    }
+
+    .profile-activity h5 {
+        font-weight: 300;
+        margin-top: 0;
+        color: #c3c3c3;
+    }
+
+    .summary-head {
+        background: #ee7272;
+        color: #fff;
+        text-align: center;
+        border-bottom: 1px solid #ee7272;
+    }
+
+        .summary-head h4 {
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .summary-head p {
+            color: rgba(255,255,255,0.6);
+        }
+
+    ul.summary-list {
+        display: inline-block;
+        padding-left: 0;
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+        ul.summary-list > li {
+            display: inline-block;
+            width: 19.5%;
+            text-align: center;
+        }
+
+            ul.summary-list > li > a > i {
+                display: block;
+                font-size: 18px;
+                padding-bottom: 5px;
+            }
+
+            ul.summary-list > li > a {
+                padding: 10px 0;
+                display: inline-block;
+                color: #818181;
+            }
+
+        ul.summary-list > li {
+            border-right: 1px solid #eaeaea;
+        }
+
+            ul.summary-list > li:last-child {
+                border-right: none;
+            }
+
+    .activity {
+        width: 100%;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+        .activity.alt {
+            width: 100%;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .activity span {
+            float: left;
+        }
+
+        .activity.alt span {
+            float: right;
+        }
+
+        .activity span, .activity.alt span {
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            background: #eee;
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .activity.terques span {
+            background: #8dd7d6;
+        }
+
+        .activity.terques h4 {
+            color: #8dd7d6;
+        }
+
+        .activity.purple span {
+            background: #b984dc;
+        }
+
+        .activity.purple h4 {
+            color: #b984dc;
+        }
+
+        .activity.blue span {
+            background: #90b4e6;
+        }
+
+        .activity.blue h4 {
+            color: #90b4e6;
+        }
+
+        .activity.green span {
+            background: #aec785;
+        }
+
+        .activity.green h4 {
+            color: #aec785;
+        }
+
+        .activity h4 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .activity p {
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+
+        .activity .activity-desk i, .activity.alt .activity-desk i {
+            float: left;
+            font-size: 18px;
+            margin-right: 10px;
+            color: #bebebe;
+        }
+
+        .activity .activity-desk {
+            margin-left: 70px;
+            position: relative;
+        }
+
+        .activity.alt .activity-desk {
+            margin-right: 70px;
+            position: relative;
+        }
+
+            .activity.alt .activity-desk .panel {
+                float: right;
+                position: relative;
+            }
+
+    .activity-desk .panel {
+        background: #F4F4F4;
+        display: inline-block;
+    }
+
+
+    .activity .activity-desk .arrow {
+        border-right: 8px solid #F4F4F4 !important;
+    }
+
+    .activity .activity-desk .arrow {
+        border-bottom: 8px solid transparent;
+        border-top: 8px solid transparent;
+        display: block;
+        height: 0;
+        left: -7px;
+        position: absolute;
+        top: 13px;
+        width: 0;
+    }
+
+    .activity-desk .arrow-alt {
+        border-left: 8px solid #F4F4F4 !important;
+    }
+
+    .activity-desk .arrow-alt {
+        border-bottom: 8px solid transparent;
+        border-top: 8px solid transparent;
+        display: block;
+        height: 0;
+        right: -7px;
+        position: absolute;
+        top: 13px;
+        width: 0;
+    }
+
+    .activity-desk .album {
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+        .activity-desk .album a {
+            margin-right: 10px;
+        }
+
+            .activity-desk .album a:last-child {
+                margin-right: 0px;
+            }
+</style>
+
+

@@ -1,0 +1,197 @@
+﻿
+@model KS_Payroll.Areas.Admin.ViewModels.JobCardVm
+
+@{
+    IEnumerable<KS_Payroll.Areas.Admin.Data.TempJobCard> attendanceList = ViewData["attendanceList"] as IEnumerable<KS_Payroll.Areas.Admin.Data.TempJobCard>;
+    IEnumerable<KS_Payroll.Areas.Admin.ViewModels.EmpinfoVM> empinfos = ViewData["empDetails"] as IEnumerable<KS_Payroll.Areas.Admin.ViewModels.EmpinfoVM>;
+
+
+
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<div class='box box-info'>
+    <div class='box-header with-border'>
+        <h3 class='box-title'><i class="fa fa-tag"></i> Job Card Search</h3>
+    </div>
+    <div class='box-body'>
+        <div class="row">
+            <form role="form" asp-action="JobCardList" asp-controller="JobCard">
+
+                <div class="form-group  col-md-2">
+                    <label>From</label>
+                    <input type="date" class="form-control" autocomplete="off" required asp-for="searchFromDate" />
+                </div>
+                <div class="input-group  col-md-2">
+                    <label>To</label>
+                    <input type="date" class="form-control" autocomplete="off" required asp-for="searchToDate" />
+                </div>
+                <br>
+                <div class="form-group  col-md-2">
+                    <label>Employee ID</label>
+                    <input type="text" class="form-control" asp-for="EmpIDCard" autocomplete="off" required
+                           placeholder="Employee ID">
+                </div>
+
+                <div class="box-footer">
+
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div><!-- /.box-body -->
+
+</div><!-- /.box -->
+
+<div class='box box-info'>
+
+    <div class='box-body'>
+        <div class='row'>
+
+            <div class="box box-solid">
+                <div class="col-md-2 card">
+                    @*@{string pic = Model.EmpIDCard + ".jpg"; }
+
+
+                    <img class="card-img-top" src="~/UploadedProfile/@pic" style="height:100px">*@
+                    <div class="card-body">
+                        <label class="card-body">@Model.EmpStats</label>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <label>Name:  @Model.EmpName</label><br>
+                    <label>ID: @Model.EmpIDCard</label><br>
+                    <label>Designation: @Model.EmpDesignationTitle</label><br>
+                    <label>Floor: @Model.EmpFloor</label><br>
+                    <label>Joining Date: @Model.EmpJoiningDate.ToShortDateString()</label>
+                </div>
+                <div class="col-md-3">
+
+                    <label>Early Out:@Model.totalEarlyOut (hh:mm)</label><br>
+                    <label>Total Over Time: @Model.TotalOverTime</label><br>
+                    <label>Total Days: @Model.totalDays </label><br>
+                    <label>WeekEnd/Holiday: @Model.totalEvent</label>
+                </div>
+                <div class="col-md-3">
+
+                    <label>Present:@Model.totalPresent </label><br>
+                    <label>Absent: @Model.totalAbsent</label><br>
+                    <label>Leave: @Model.totalLeave</label><br>
+                    <label>Late: @Model.totalLate (hh:mm)</label><br>
+
+                </div>
+            </div>
+
+        </div><!-- /.row -->
+    </div><!-- /.box-body -->
+
+</div><!-- /.box -->
+
+
+<div class='box-body box-info'>
+    <div class='row'>
+        <div class="box box-info">
+            <table class="table table-hover" id="myTable">
+                <thead class="bg-info">
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Week Day
+                        </th>
+                        <th>
+                            In Time
+                        </th>
+                        <th>
+                            Out Time
+                        </th>
+                        <th>
+                            Late
+                        </th>
+                        <th>
+                            Early Out
+                        </th>
+                        <th>
+                            Over Time
+                        </th>
+                        <th>
+                            Stats
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (attendanceList != null)
+                    {
+                        @foreach (KS_Payroll.Areas.Admin.Data.TempJobCard item in attendanceList)
+                        {
+
+
+
+                            <tr>
+                                <td>
+                                    @item.Date.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.Date.DayOfWeek.ToString()
+                                </td>
+                                <td>
+                                    @item.InTime
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OutTime)
+                                </td>
+                                <td>
+                                    @item.LateTime
+
+                                </td>
+                                <td>
+                                    @item.EarlyOut
+                                </td>
+                                <td>
+                                    @item.OverTime
+                                </td>
+                                <td>
+                                    @item.status
+                                </td>
+
+
+                            </tr>
+                        }
+                    }
+
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- /.row -->
+</div><!-- /.box-body -->
+@section Scripts{
+   
+    <script src="~/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": false,
+                "bAutoWidth": false
+
+            });
+
+        });
+
+    </script>
+
+}

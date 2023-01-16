@@ -1,0 +1,294 @@
+﻿
+@model KS_Payroll.Areas.Admin.ViewModels.ManualAttendanceVM
+
+@{
+
+
+
+    ViewData["Title"] = "Department";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<head>
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+
+</head>
+
+<div class="row">
+
+    <div class="col-md-5">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Manual Attendance (Singel Date)</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+
+
+
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input type="text" class="form-control" asp-for="EmpIDCard" id="eidcardnum" required />
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row mb-4">
+                            <div class="col-sm-5">
+                                <label>IN Date:</label>
+                                <input id="Date_Start" type="date" name="StartTime" class="form-control" asp-for="StartDate" required>
+                            </div>
+                            <div class="col-sm-5">
+                                <label>Exit Date:</label>
+                                <div class="input-group">
+
+                                    <span class="input-group-addon" id="dateTransfer">
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </span>
+                                    <input type="date" class="form-control" id="Date_End" asp-for="EndDate" required />
+
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row mb-4">
+                            <div class="col-sm-5">
+                                <label>IN Time:</label>
+                                <input id="dayinTime" type="time" name="StartTime" asp-for="InTime" class="form-control">
+                            </div>
+                            <div class="col-sm-5">
+                                <label>Exit Time:</label>
+                                <input id="dayoutTime" type="time" name="EndTime" asp-for="OutTime" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div><!-- /.box-body -->
+
+
+
+
+            </form>
+            <div class="box-footer">
+                <button type="submit" id="attendanceAddBtn" class="btn btn-primary">Submit</button>
+            </div>
+        </div><!-- /.box -->
+
+    </div><!--/.col (left) -->
+    <div class="col-md-7">
+
+        <div class="box box-success">
+            <div class="box-header">
+                <h3 class="box-title">Name: <a asp-route-id="#" asp-action="EmpDetails" asp-controller="Employee" id="asd1">Support Team</a></h3><br>
+                <h3 class="box-title">Joning Date: <a id="asd2"></a></h3><br>
+                <h3 class="box-title">Designation: <a id="asd3"></a></h3><br>
+                <h3 class="box-title">Shift In Time: <a id="asd4"></a></h3><br>
+                <h3 class="box-title">Shift Exit Time: <a id="asd5"></a></h3><br>
+
+
+            </div><!-- /.box-header -->
+            <hr>
+            <!-- form start -->
+            <table class="table table-hover" id="proTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            In Time
+                        </th>
+                        <th>
+                            Out Time
+                        </th>
+                        <th>
+                            Late
+                        </th>
+                        <th>
+                            Early Out
+                        </th>
+                        <th>
+                            OT
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+
+        </div><!-- /.box -->
+
+
+    </div><!--/.col (right) -->
+
+</div><!-- /.row -->
+
+
+
+@section Scripts{
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+
+        $("#attendanceAddBtn").click(function () {
+
+
+            var eidcardnum = $("#eidcardnum").val();
+            var date_start = $("#Date_Start").val();
+            var date_end = $("#Date_End").val();
+            var dayinTime = $("#dayinTime").val();
+            var dayoutTime = $("#dayoutTime").val();
+
+            if (eidcardnum == '')
+                swal("Give Employee ID number");
+            if (dayinTime =='' && dayoutTime == '')
+                swal("Give Time for ID: " + empidcardnum + "");
+
+            if (eidcardnum != '' && eidcardnum != 0 && date_start != null && date_end != null) {
+                if (dayinTime != '' || dayoutTime != '')
+                    add_attendance();
+            }
+            
+
+
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        $("#dateTransfer").click(function () {
+
+            document.getElementById("Date_End").value = document.getElementById("Date_Start").value;
+            $('table td').remove();
+            searchinfo();
+            searchAttendance();
+
+        });
+
+        //For Get emp Details
+        $("#eidcardnum,#Date_Start,#Date_End,#dateTransfer").change(function () {
+            $('table td').remove();
+
+            searchinfo();
+            searchAttendance();
+
+        });
+
+        function searchAttendance() {
+            var eidnum = $("#eidcardnum").val();
+            var date_start = $("#Date_Start").val();
+            var date_end = $("#Date_End").val();
+            if (eidnum != null && eidnum != "0" && date_start != 0 && date_end != 0 && date_start != null && date_end != null)
+            {
+                $.getJSON('@Url.Action("GetAttendanceSingel", "AttendanceManual")', { eidnum: eidnum, date_start: date_start, date_end: date_end }, function (mainhead) {
+                    console.log(mainhead);
+                    if (mainhead != 0) {
+
+                        for (var i = 0; i < mainhead.length; i++) {
+                            $('table').show();
+                            tr = $('<tr/>');
+                            tr.append("<td>" + mainhead[i].ddate + "</td>");
+                            tr.append("<td>" + mainhead[i].empInTime + "</td>");
+                            tr.append("<td>" + mainhead[i].empOutTime + "</td>");
+                            tr.append("<td>" + mainhead[i].late + "</td>");
+                            tr.append("<td>" + mainhead[i].earlyout+ "</td>");
+                            tr.append("<td>" + mainhead[i].overTime+ "</td>");
+
+                            $('table').append(tr);
+                        }
+                    }
+                    else {
+
+                        $('table td').remove();
+                    }
+                });
+            }
+        }
+         function searchinfo() {
+            var eidnum = $("#eidcardnum").val();
+            var date_start = $("#Date_Start").val();
+            var date_end = $("#Date_End").val();
+
+             if (eidnum != null && eidnum != "0" && date_start != 0 && date_end != 0 && date_start != null && date_end != null)
+            {
+                 $.getJSON('@Url.Action("GetEmpInfo", "AttendanceManual")', { eidnum: eidnum }, function (mainhead) {
+
+                    console.log(mainhead);
+                    if (mainhead != null) {
+                        $('#asd1').html(mainhead.empName);
+                        $('#asd2').html(mainhead.jdate);
+                        $('#asd3').html(mainhead.empDesignationTitle);
+                        $('#asd4').html(mainhead.inTime);
+                        $('#asd5').html(mainhead.outTime);
+                    }
+                    else {
+                        $('#asd1').html("Not Found");
+                        $('#asd2').html("Not Found");
+                        $('#asd3').html("Not Found");
+                        $('#asd4').html("Not Found");
+                        $('#asd5').html("Not Found");
+
+                        $('table td').remove();
+                    }
+
+                });
+
+            }
+        }
+
+        function add_attendance() {
+            var empidcardnum = $("#eidcardnum").val();
+            var date_start = $("#Date_Start").val();
+            var date_end = $("#Date_End").val();
+            var dayinTime = $("#dayinTime").val();
+            var dayoutTime = $("#dayoutTime").val();
+
+            if (empidcardnum != null && empidcardnum != "0" && date_start != 0 && date_end != 0 && date_start != null && date_end != null)
+            {
+                $.getJSON('@Url.Action("AddManualAttendance", "AttendanceManual")', { empidcardnum: empidcardnum, InDate: date_start, date_end: date_end, dayinTime: dayinTime, dayoutTime: dayoutTime}, function (mainhead) {
+
+                    console.log(mainhead);
+                    if (mainhead == 12) 
+                        swal("Attendance Added!", "", "success");
+
+                    else
+                        swal("Attendance Not Added!", "Give Right Date and ID", "warning");
+                    
+                    $('table td').remove();
+
+                    searchinfo();
+                    searchAttendance();
+
+                });
+
+            }
+        }
+
+
+    </script>
+}
+

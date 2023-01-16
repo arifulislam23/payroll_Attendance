@@ -1,0 +1,75 @@
+﻿@model KS_Payroll.Areas.Admin.Data.AttendanceRow
+@{
+    ViewData["Title"] = "TakeAttendance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<h2>TakeAttendance</h2>
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Create Event/ Holiday</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" asp-action="AttendanceProcess" asp-controller="AttendaceUpload">
+                <div class="box-body">
+
+                    <div class="form-group">
+                        <label for="TimeName">Start Date</label>
+                        <input type="date" class="form-control" asp-for="StartDate" id="TimeName" autocomplete="off" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="TimeName">End Date</label>
+                        <input type="date" class="form-control" asp-for="EndDate" id="TimeName" autocomplete="off" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="CompanyId">Attendance Sheet </label>
+                        <span class="text-danger"></span>
+                        <select required class="form-control basic-single" name="FileName" >
+                            @foreach (var item in ViewBag.filesname)
+                            {
+                                <option value="@item.FileName">@item.FileName</option>
+                            }
+
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="CompanyId">Module Type </label>
+                        <span class="text-danger"></span>
+                        <select required class="form-control" id="companyNameForDepartment" name="Moduletye">
+                            @foreach (var item in ViewBag.modulelist)
+                            {
+                                <option value="@item.AMid">@item.AModuleName</option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.basic-singlee').select2();
+        });
+    </script>
+    
+}

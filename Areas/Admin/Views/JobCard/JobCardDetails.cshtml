@@ -1,0 +1,115 @@
+﻿
+@model KS_Payroll.Areas.Admin.ViewModels.EmpinfoVM
+
+@{
+    IEnumerable<KS_Payroll.Areas.Admin.ViewModels.AttendanceVM> attendanceList = ViewData["attendanceList"] as IEnumerable<KS_Payroll.Areas.Admin.ViewModels.AttendanceVM>;
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<div class='box box-info'>
+    <div class='box-header with-border'>
+        <h3 class='box-title'><i class="fa fa-tag"></i> Employee Job Card</h3>
+    </div>
+    <div class='box-body'>
+        <div class='row'>
+           
+                <div class="box box-solid">
+                    <div class="col-md-2">
+                        @{string pic = Model.EmpIDCard + ".jpg"; }
+                        <img src="~/UploadedProfile/@pic" style="height:100px">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Name: @Model.EmpName</label><br>
+                        <label>ID: @Model.EmpIDCard</label><br>
+                        <label>Name: sad</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Name: sad</label><br>
+                        <label>Name: sad</label><br>
+                        <label>Name: sad</label><br>
+                        <label>Name: sad</label>
+                    </div>
+                </div>
+           
+
+
+        </div><!-- /.row -->
+    </div><!-- /.box-body -->
+
+
+
+</div><!-- /.box -->
+
+
+    <div class='box-body box-info'>
+        <div class='row'>
+            <div class="box box-info">
+                <table class="table table-hover" id="myTable">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                In Time
+                            </th>
+                            <th>
+                                Out Time
+                            </th>
+                            <th>
+                                Late
+                            </th>
+                            <th>
+                                Early Out
+                            </th>
+                            <th>
+                                Over Time
+                            </th>
+                             
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (KS_Payroll.Areas.Admin.ViewModels.AttendanceVM item in attendanceList)
+                        {
+
+                     
+
+                            <tr>
+                                <td>
+                                    @item.Date
+                                </td>
+                                <td>
+
+                                    @item.EmpInTime
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmpOutTime)
+                                </td>
+                                <td>
+                                    @item.LateTime
+
+                                </td>
+                                <td>
+                                    @item.EarlyoutTime
+                                </td>
+                                <td>
+                                    @item.OverTime
+                                </td>
+
+
+                            </tr>
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!-- /.row -->
+    </div><!-- /.box-body -->
+
+

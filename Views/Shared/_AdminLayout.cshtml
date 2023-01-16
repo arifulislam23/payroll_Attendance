@@ -1,0 +1,573 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KS Payroll</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />*@
+    <!-- Old links -->
+
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="~/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="~/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck -->
+    <link href="~/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <!-- Morris chart -->
+    <link href="~/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <!-- jvectormap -->
+    <link href="~/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <!-- Date Picker -->
+    <link href="~/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+    <!-- Daterange picker -->
+    <link href="~/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link href="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+    <!---datatable-->
+    <link href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index2.html" class="logo"><b style="color:darkred">KS</b>Payroll</a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/images/ks.png" class="user-image" alt="User Image" />
+                                <span class="hidden-xs">Hello User Name</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                                    <p>
+                                        Alexander Pierce - Web Developer
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="~/images/ks.png" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>User Name</p>
+
+                        <a href="#"><i class="fa fa-circle text-success"></i> Active</a>
+                    </div>
+                </div>
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search..." />
+                        <span class="input-group-btn">
+                            <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <div id="menu">
+                    <ul class="sidebar-menu">
+                        <li class="header">MAIN NAVIGATION</li>
+
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        @*Pre setup module menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "Company" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "Department" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Section" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Floor" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Line" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Shift" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Leave" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "DesignationType" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "Designation" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-cog"></i> <span>Pre Module</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li id="mm" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Company" ? "active" : "")">
+
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Company">
+                                        <i class="fa fa-circle-o"></i> Company
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Department" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Department">
+                                        <i class="fa fa-circle-o"></i> Department
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Section" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Section">
+                                        <i class="fa fa-circle-o"></i> Section
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Floor" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Floor">
+                                        <i class="fa fa-circle-o"></i> Floor
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Line" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Line">
+                                        <i class="fa fa-circle-o"></i> Line
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Shift" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Shift">
+                                        <i class="fa fa-circle-o"></i> Shift
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Leave" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Leave">
+                                        <i class="fa fa-circle-o"></i> Leave
+                                    </a>
+                                </li>
+
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DesignationType" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="DesignationType">
+                                        <i class="fa fa-circle-o"></i> Designation Type
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Designation" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="PreModule" asp-action="Designation">
+                                        <i class="fa fa-circle-o"></i> Designation
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @*pre setup module end*@
+
+
+
+                        @*Employee menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "CreateEmployee" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "EmployeeList" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "EmpDetails" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "EmpUpdate" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-user"></i> <span>Employees</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreateEmployee" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="Employee" asp-action="CreateEmployee">
+                                        <i class="fa fa-plus-circle"></i> <span>Add Employee</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EmployeeList" ? "active" :
+                                ViewContext.RouteData.Values["Action"].ToString() == "EmpDetails" ?"active":
+                                ViewContext.RouteData.Values["Action"].ToString() == "EmpUpdate" ?"active":
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Employee" asp-action="EmployeeList">
+                                        <i class="fa fa-list-ul"></i> <span>Employee Information</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        @*Employee menu end*@
+
+                        @*Ducuments upload menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicIndex" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-folder"></i> <span>Documents</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicIndex" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="MultiPicIndex">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Profile Image</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="#">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>NID Card</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="#">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>DOB</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="#">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Passport</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="#">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Contract</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultiPicNID" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="EmpDocument" asp-action="#">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Sing</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @*Employee menu end*@
+                        @*Job Card menu end*@
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "JobCardList" ? "active" : "")">
+                            <a asp-area="Admin" asp-controller="JobCard" asp-action="JobCardList">
+                                <i class="fa fa-credit-card"></i> <span>Job Card</span>
+                            </a>
+                        </li>
+                        @*Job Card menu end*@
+
+
+                        @*Calender Event*@
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "EventCreate" ? "active" : "")">
+                            <a asp-area="Admin" asp-controller="Calendar" asp-action="EventCreate">
+                                <i class="fa fa-calendar"></i> <span>Calender</span>
+                            </a>
+                        </li>
+
+                        @*Leave menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "CreateLeave" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "CreateLeave" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "LeaveHistory" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-sign-out"></i> <span>Leave Managment</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreateLeave" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="LeaveManagement" asp-action="CreateLeave">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Create Leave</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LeaveHistory" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="LeaveManagement" asp-action="LeaveHistory">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Leave History</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @*Attendance Report*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "AttendanceList" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "AttendanceMissingList" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "TakeManualAttendance" ?"active":
+
+                            "")">
+                            <a href="#">
+                                <i class="fa fa-clock-o"></i> <span>Attendance Report</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AttendanceList" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendanceReport" asp-action="AttendanceList">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>All Attendance List </span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AttendanceMissingList" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendanceReport" asp-action="AttendanceMissingList">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Missing List</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TakeManualAttendance" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendanceManual" asp-action="TakeManualAttendance">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Manual Attendance</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+
+
+                        @*Attendance menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "AttendanceModule" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "AttenFileUpload" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "TakeAttendance" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "RowAttendanceList" ?"active":
+
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-clock-o"></i> <span>Attendance Managment</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "RowAttendanceList" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendanceModule" asp-action="RowAttendanceList">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Row Attendance List</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AttenFileUpload" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendaceUpload" asp-action="AttenFileUpload">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Upload Attendance File</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TakeAttendance" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendaceUpload" asp-action="TakeAttendance">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>Take Attendance</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AttendanceModule" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="AttendanceModule" asp-action="AttendanceModule">
+                                        <i class="fa fa-arrow-circle-right"></i> <span>attendance Module</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @*Attedance menu end*@
+
+                        @*Regine Menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "CreateRegine" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "RegineList" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-eraser"></i> <span>Regine Employees</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CreateRegine" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="Regine" asp-action="CreateRegine">
+                                        <i class="fa fa-plus-circle"></i> <span>Add Resigned</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "RegineList" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Regine" asp-action="RegineList">
+                                        <i class="fa fa-list-ul"></i> <span>Resigned withdrawal</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        @*regine Menu End*@
+
+                        @*Advance Menu*@
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "GiveAdvance" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "GiveLoan" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "AdvanceHistory" ?"active":
+                            ViewContext.RouteData.Values["Action"].ToString() == "LoanHistory" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-eraser"></i> <span>Advance-Loan</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GiveAdvance" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="Advance" asp-action="GiveAdvance">
+                                        <i class="fa fa-plus-circle"></i> <span>Give Advance</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "GiveLoan" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Loans" asp-action="GiveLoan">
+                                        <i class="fa fa-list-ul"></i> <span>Give Loan</span>
+                                    </a>
+                                </li>
+
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdvanceHistory" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Advance" asp-action="AdvanceHistory">
+                                        <i class="fa fa-list-ul"></i> <span>Advance History</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "LoanHistory" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Advance" asp-action="LoanHistory">
+                                        <i class="fa fa-list-ul"></i> <span>Loan History</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        @*Advance Menu End*@
+
+                        @*Fine/punishment menu end*@
+                        
+                        <li class="treeview @(ViewContext.RouteData.Values["Action"].ToString() == "PunishmentCreate" ? "active" :
+                            ViewContext.RouteData.Values["Action"].ToString() == "History" ?"active":
+                            "")">
+
+                            <a href="#">
+                                <i class="fa fa-credit-card"></i> <span>Punishment</span><i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PunishmentCreate" ? "active" : "")">
+                                    <a asp-area="Admin" asp-controller="Punishment" asp-action="PunishmentCreate">
+                                        <i class="fa fa-list-ul"></i> <span>Create Punishment</span>
+                                    </a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "History" ? "active" :
+                                "")">
+                                    <a asp-area="Admin" asp-controller="Punishment" asp-action="History">
+                                        <i class="fa fa-list-ul"></i> <span>History</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        @*Fine/punishment menu end*@
+
+                    </ul><!---sidebar-menu-->
+
+
+
+                </div>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    @ViewContext.RouteData.Values["Action"].ToString()
+                    <small>Control panel</small>
+
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="javascript:history.go(-1)"> <i class="fa fa-arrow-circle-left"></i> Back</a></li>
+                    <li><a href="javascript:history.go(+1)">Next <i class="fa fa-arrow-circle-right"></i> </a></li>
+
+
+
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+
+                @RenderBody()
+
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.0
+            </div>
+            <strong>Copyright &copy; 2022 <a href="#">CodeWeaversIT</a>.</strong> All rights reserved.
+        </footer>
+    </div><!-- ./wrapper -->
+
+    @RenderSection("Scripts", required: false)
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!---Old files-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!-- jQuery 2.1.3 -->
+    <script src="~/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- jQuery UI 1.11.2 -->
+    @*<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>*@
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <!-- jQuery 2.1.3 -->
+    <script src="~/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="~/bootstrap/js/bootstrap.min.js"
+            type="text/javascript"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="~/plugins/datatables/jquery.dataTables.js"
+            type="text/javascript"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap.js"
+            type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="~/plugins/slimScroll/jquery.slimscroll.min.js"
+            type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="~/plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/app.min.js" type="text/javascript"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/dist/js/demo.js" type="text/javascript"></script>
+
+
+</body>
+</html>

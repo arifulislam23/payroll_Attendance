@@ -1,0 +1,75 @@
+﻿@model IEnumerable<KS_Payroll.Areas.Admin.Data.Leaveinfo>
+
+@{
+    ViewData["Title"] = "LeaveHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Data Table With Full Features</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                       Emp ID
+                    </th>
+                    <th>
+                       Leave Desc
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        End Date
+                    </th>
+                    <th>
+                       Total Days
+                    </th>
+                    <th>
+                        Leave Bonus
+                    </th>
+                    <th>
+                        Leave Type
+                    </th>
+                   
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpCardID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_desc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_Start)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_End)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_Days)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_Bonus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave_Type)
+                        </td>
+                       
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.LID">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div><!---.box body-->
+</div><!---.box -->
